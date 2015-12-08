@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="LTHD_WebLaptopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LTHD_WebLaptopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CT_DonDH">
           <Key>
             <PropertyRef Name="Id_DonDH" />
@@ -74,14 +74,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TenSP" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TenSP" Type="nvarchar" MaxLength="1024" Nullable="false" />
           <Property Name="Id_NCC" Type="int" Nullable="false" />
-          <Property Name="HDD" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="RAM" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CPU" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HDD" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="RAM" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="CPU" Type="nvarchar" MaxLength="1024" Nullable="false" />
           <Property Name="DonGia" Type="float" Nullable="false" />
-          <Property Name="HinhAnh" Type="nchar" MaxLength="20" Nullable="false" />
-          <Property Name="BaoHanh" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="HinhAnh" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="BaoHanh" Type="nvarchar" MaxLength="1024" Nullable="false" />
           <Property Name="LuotXem" Type="int" Nullable="false" />
           <Property Name="SoLuong" Type="int" Nullable="false" />
           <Property Name="TrangThai" Type="int" Nullable="false" />
@@ -225,8 +225,7 @@
             <End Role="TonKho" EntitySet="TonKho" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LTHD_WebLaptopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -307,14 +306,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TenSP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TenSP" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Id_NCC" Type="Int32" Nullable="false" />
-          <Property Name="HDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RAM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CPU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HDD" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RAM" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CPU" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DonGia" Type="Double" Nullable="false" />
-          <Property Name="HinhAnh" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="BaoHanh" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HinhAnh" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BaoHanh" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="LuotXem" Type="Int32" Nullable="false" />
           <Property Name="SoLuong" Type="Int32" Nullable="false" />
           <Property Name="TrangThai" Type="Int32" Nullable="false" />

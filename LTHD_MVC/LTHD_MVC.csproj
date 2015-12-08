@@ -132,6 +132,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\Helper.cs" />
+    <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Models\CT_DonDH.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
