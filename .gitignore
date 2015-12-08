@@ -280,3 +280,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 LTHD_MVC/Web.Debug.config
+LTHD_MVC/Web.Release.config
