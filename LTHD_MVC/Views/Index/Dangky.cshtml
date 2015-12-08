@@ -1,0 +1,133 @@
+﻿@{
+    Layout = "~/Views/Index/Layout.cshtml";
+    ViewBag.Title = "Dangky";
+}
+<div style="width:50%;">
+    <h3 style="margin-left:120px; ">Đăng kí tài khoản</h3>
+    <form method="post" id="Formdangky" action="/Index/XuLyDangKy">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <p style="font-weight: bold; margin-top: 20px;">Họ Tên:</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input name="HoTen" style="width:400px;" type="text" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p style="font-weight: bold; margin-top: 20px;">Hãy chọn tên người dùng của bạn:</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input name="Email" style="width:400px;" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example.com" type="text" class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p style="font-weight: bold; margin-top: 20px;">Mật khẩu:</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input name="MatKhau" id="MatKhau" style="width:400px;" type="password" class="form-control" onkeyup="check()">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p style="font-weight: bold; margin-top: 20px;">Xác nhận mật khẩu:</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input name="XacNhanMatKhau" id="XacNhanMatKhau" style="width:400px;" type="password" class="form-control" onkeyup="check()">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <p style="font-weight: bold; margin-top: 20px;">Ngày Sinh:</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input style="width:400px;" type="date" name="NGAYSINH" data-date-format="DD MM YYYY" class="ngaysinh">
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td colspan="2">
+                    <p style="font-weight: bold; margin-top: 20px;">Địa chỉ:</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input style="width:400px;" type="text" class="form-control" name="DiaChi">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p style="font-weight: bold; margin-top: 20px;">Số điện thoại:</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input style="width:400px;" type="text" class="form-control" name="DienThoai">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @*<button style="margin-top:10px; " type="button" class="btn btn-primary">Đăng kí</button>*@
+                    <input name="submit" type="submit" value="Đăng ký" class="btn btn-primary" style="margin-top:20px; margin-left:320px;">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    function DangKy() {
+        window.location.href = "/Index/DangKy";
+    }
+    function TruocDangKy() {
+        $('.modal-title').html('Đăng ký');
+        $('#DangKy').show();
+        $('#HoTen').val("");
+        $('#Email').val("");
+        $('#MatKhau').val("");
+        $('#XacNhanMatKhau').val("");
+        $('#NgaySinh').val("");
+        $('#DiaChi').val("");
+        $('#SoDienThoai').val("");
+        $('#myModal').modal('show');
+    }
+    function DangKy() {
+        $.ajax({
+            url: "/Index/DangKy",
+            type: 'POST',
+            data: $("#Formdangky").serialize(),
+            success: function (data) {
+                $('#myModal').modal('hide');
+
+                if (data == 1) {
+                    BootstrapDialog.alert('Đăng ký thành công', function () {
+                        location.reload();
+                    });
+                }
+                else {
+                    BootstrapDialog.alert('Có lỗi trong khi đăng ký');
+                }
+            },
+        });
+        return false;
+    }
+
+    //function check()
+    //{ var data = new Array();
+    //    data[1] = document.getElementById('password').value;
+    //    data[2] = document.getElementById('cpassword').value;
+
+    //}
+</script>
+

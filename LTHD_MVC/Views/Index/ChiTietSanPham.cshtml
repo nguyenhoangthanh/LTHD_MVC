@@ -1,0 +1,37 @@
+﻿@using LTHD_MVC.Models;
+@{
+    Layout = "~/Views/Index/Layout.cshtml";
+    ViewBag.Title = "ChiTietSanPham";
+    SanPham listsp = (SanPham)ViewBag.listsp;
+}
+
+<h3 style=" color:red; text-align:center;">Chi tiết sản phẩm</h3>
+
+<div>
+    <img class="col-md-5" src="~/Hinh/MayTinh/sanpham/@listsp.HinhAnh" />
+    <ul class="col-md-7">
+        <li>Tên sản phẩm: @listsp.TenSP</li>
+        <li style="margin-top: 14px;">Nhà cung cấp: @listsp.NhaCungCap.TenNhaCC</li>
+        <li style="margin-top: 14px;">CPU: @listsp.CPU</li>
+        <li style="margin-top: 14px;">HDD: @listsp.HDD</li>
+        <li style="margin-top: 14px;">RAM: @listsp.RAM</li>
+        <li style="margin-top: 14px;">Bảo hành: @listsp.BaoHanh</li>
+        <li style="color:blue; margin-top:14px; font-size:20px;" >Đơn giá: @Html.FormatValue(@listsp.DonGia, "{0:#,###,###}")</li>
+        @*<a href="" class="add-to-cart" data-id="@listsp.Id" style="color: red; font-size: 30px; margin-top:14px;">Mua hàng</a>*@
+         
+    </ul>
+    <button type="button" class="btn btn-primary" style="margin-bottom: 15px;">Chọn mua</button>   
+
+    <div class="fb-like" data-href="http://localhost:32390/SanPham/ChiTietSanPham/@listsp.Id" data-width="150" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+</div>
+<script>
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.0";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<div id="line"></div>
+
+

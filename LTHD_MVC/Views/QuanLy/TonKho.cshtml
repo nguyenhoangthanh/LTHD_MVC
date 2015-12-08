@@ -1,0 +1,10 @@
+﻿@using LTHD_MVC.Models;
+@{
+    ViewBag.Title = "Quản lý tồn kho - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý tồn kho";
+    ViewBag.ClassTonKho = "active";
+    Layout = "~/Views/QuanLy/Layout.cshtml";
+    List<SanPham> list = (List<SanPham>)ViewBag.ListSanPham;
+}
+
+<h2>TonKho</h2>

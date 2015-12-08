@@ -1,0 +1,247 @@
+﻿@{
+    ViewBag.Title = "Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thế giới máy tính</title>
+    <meta charset="utf-8">
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Content/Css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Css/cerulean-bootstrap.css" rel="stylesheet" />
+    <script src="~/Script/jquery.min.js"></script>
+    <script src="~/Script/bootstrap.min.js"></script>
+       
+    <style>
+        .contain {
+            width: 100%;
+            float: left;
+            margin-top: 20px;
+        }
+
+        .box-left {
+            border: 1px solid black;
+            width: 20%;
+            float: left;
+            margin-right: 5px;
+            border-radius: 10px;
+        }
+
+        .box-right {
+            height: 600px;
+            width: 20%;
+            float: right;
+        }
+
+        .menu {
+            /*background: black;*/
+            color: white;
+            float: left;
+            width: 100%;
+            margin-bottom: 15px;
+            /*margin-top: 45px;*/
+        }
+
+        .sub-box-left {
+            /*border-top-left-radius: 10px;
+            border-top-right-radius: 10px;*/
+            background-color: #0099FF;
+            color: white;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .sub-box-left-background {
+            background: #4740a7;
+        }
+
+        .sub-box-center {
+            border-radius: 3px;
+            background-color: #564a4a;
+            color: white;
+            text-align: center;
+        }
+
+        .sub-box-right {
+            /*border-radius: 10px;*/
+            border: 1px solid black;
+            margin-bottom: 10px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-color: #0099FF;
+        }
+
+        .hinh {
+            width: 140px;
+            height: 200px;
+            float: left;
+            margin-bottom: 10px;
+            margin-left: 10px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+            .hinh img {
+                width: 40px;
+                text-align: center;
+            }
+
+        .footer {
+            padding-top: 10px;
+            background-image: url('../Content/Image/bg-footer.png');
+            background-position: center top;
+            background-repeat: repeat-x;
+            height: 100px;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            float: left;
+            width: 100%;
+            margin-top: 100px;
+        }
+
+        .RenderBody {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <img src="~/Content/Image/logo.png" class="img-rounded" alt="Thế giới máy tính" style="height: 80px" />
+        <div class="menu">
+            <!-- Static navbar -->
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">
+                            @*<img src="~/Content/Image/logo_mini.png" style="margin:-20px;"/>*@
+                            Trang chủ
+                        </a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Danh mục sản phẩm <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Action</a></li>
+                                    <li><a href="#">Another action</a></li>
+                                    <li><a href="#">Something else here</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li class="dropdown-header">Nav header</li>
+                                    <li><a href="#">Separated link</a></li>
+                                    <li><a href="#">One more separated link</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Top xem nhiều nhất</a></li>
+                            <li><a href="#">Bảo hành</a></li>
+                            <li><a href="#">Liên hệ</a></li>
+                        </ul>
+                        <form class="navbar-form navbar-right" role="search">
+                            <div class="form-group">
+                                <input placeholder="Nhập nội dung cần tìm..." type="text" name="Timkiem" value="" class="form-control">
+                            </div>
+                            <button class="btn btn-default">Tìm kiếm</button>
+                        </form>
+                    </div><!--/.nav-collapse -->
+                </div><!--/.container-fluid -->
+            </nav>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
+            <div class="col-md-3">
+                <div class="sub-box-right">
+                    <p class="sub-box-left">Hỗ trợ trực tuyến</p>
+                    <a href="ymsgr:SendIM?Nguyenthiquynh">
+                        <img border="0" src="http://opi.yahoo.com/online?u=YOUR Yahoo ID&amp;m=g&amp;t=2">
+                    </a>
+                </div>
+                <div class="sub-box-right">
+                @if (Session["HoTen"] == null && Session["Email"] == null)
+                {
+                    <p class="sub-box-left">Thành viên</p>
+                    <div style="padding:0px 5px">
+                        <form method="post" id="FormDangNhap" action="/Index/DangNhap">
+                            <div class="form-group">
+                                <input name="Email" class="form-control" type="text" id="TenDangNhap" placeholder="Tên Đăng Nhập" value="">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Mật khẩu" type="password" id="MatKhau" name="Matkhau" value="">
+                            </div>
+                            <input type="submit" class="btn btn-primary" name="dangnhap" value="Đăng nhập" id="DangNhap">
+                            <a href="/Index/DangKy"><input type="button" class="btn btn-primary" onclick="TruocDangKy()" value="Đăng ký" /></a>
+
+                        </form>
+                    </div>
+                }
+                else
+                {
+                    <p class="sub-box-left">Xin chào @Session["HoTen"]</p>
+                    <div style="padding:0px 5px">
+                        ....................
+                    </div>
+                }
+                </div>
+                <div class="sub-box-right">
+                    <p class="sub-box-left">Giỏ hàng</p>
+                    <p> Thông tin giỏ hàng</p>
+                    <p> 0 sản phẩm</p>
+                    <img src="~/Content/Image/shoppingcart.png" />
+                </div>
+
+                @*else
+                        {
+                            <div class="sub-box-right">
+                                <p class="sub-box-left">Xin Chào</p>
+                                <p class="sub-box-left-dangnhap">@Session["Ten"]</p>
+
+                                <a href="/Index/Thoat"><input type="button" name=" thoat" value="Thoát" id="Thoat"></a>
+                            </div>
+                        }
+                    }*@
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>
+                Thế giới máy tính - Lập trình hiện đại - Nhóm 2<br />
+                Bản quyền © 2015 thuộc về Trường Đại học Sài Gòn.<br />
+                Điện thoại: (08) 38.338.975 - 38.352.309
+            </p>
+        </footer>
+    </div>
+
+</body>
+</html>
+<script>
+    function HayHay() {
+        $.ajax({
+            url: "/Index/DangNhap/",
+            type: 'POST',
+            data: $("#FormDangNhap").serialize(),
+            success: function (data) {
+                $('#myModal').modal('hide');
+
+                if (data == 1) {
+                    alert('Đăng nhập thành công');
+                    location.reload();
+                    //window.location = 'https://www.google.com/';
+                }
+                else {
+                    alert('Có lỗi trong khi đăng nhập');
+                }
+            },
+        });
+        return false;
+    }
+    </script>

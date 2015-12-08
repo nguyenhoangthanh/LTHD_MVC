@@ -1,0 +1,28 @@
+* Giao dien 
+- Phan chia 2 giao dien: nguoi dung, admin
+- Co su chuyen doi tu giua hai giao dien
+
+* Nguoi dung
+- Xem tat ca san pham tren web, xem san pham theo nha cung cap
+- Tim kiem san pham, tim kiem nang cao
+- Dang ky, dang nhap
+- Doi mat khau
+- Chuc nang dat hang online, nhập thông tin bằng tay
+- Dang nhap quyen nguoi dung ko the truy cap trang quan ly admin
+- Chen like, share, cmt fb 
+
+* Admin
+- Quan ly san pham: xem danh sach san pham, them, sua, xoa, tim kiem theo ten san pham
+Chuc nang nhap hang
+- Quan ly nha cung cap: xem danh sach nha cung cap, them, sua, xoa, tim kiem theo ten nha cung cap
+- Quan ly nguoi dung: xem danh sach nguoi dung, them - sua - xoa - tim kiem
+Luu y: Nguoi dung ko the tu y thay doi quyen cua minh, chi co admin cao nhat (super admin) moi duoc phep thay doi quyen, xoa nguoi dung.
+- Quan ly phieu nhap: 
+- Quan ly don dat hang: 
+- quan ly ton kho theo san pham
+
+- Tim kiem san pham nang cao (X): tìm theo nhà sản xuất và khoảng giá
+
+
+
+

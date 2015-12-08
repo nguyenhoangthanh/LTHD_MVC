@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0b749d7be79b4e0aa62aeb8f2945dc4b" Name="Diagram1">
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.CT_DonDH" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.DonDH" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.NguoiDung" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.NhaCungCap" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.PhieuNhap" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.Quyen" Width="1.5" PointX="7.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.SanPham" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.TinhTrangDonDH" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.TonKho" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <AssociationConnector Association="LTHD_WebLaptopModel.FK_CT_DonDH_DonDH1" ManuallyRouted="false" />
+        <AssociationConnector Association="LTHD_WebLaptopModel.FK_CT_DonDH_SanPham1" ManuallyRouted="false" />
+        <AssociationConnector Association="LTHD_WebLaptopModel.FK_DonDH_TinhTrangDonDH1" ManuallyRouted="false" />
+        <AssociationConnector Association="LTHD_WebLaptopModel.FK_NguoiDung_Quyen1" ManuallyRouted="false" />
+        <AssociationConnector Association="LTHD_WebLaptopModel.FK_SanPham_NhaCungCap1" ManuallyRouted="false" />
+        <AssociationConnector Association="LTHD_WebLaptopModel.FK_PhieuNhap_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="LTHD_WebLaptopModel.FK_TonKho_SanPham1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
