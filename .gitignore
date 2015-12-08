@@ -279,3 +279,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+LTHD_MVC/Web.Debug.config
