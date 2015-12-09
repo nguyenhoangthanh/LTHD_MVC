@@ -73,5 +73,11 @@ namespace LTHD_MVC.Controllers
             }
             return RedirectToAction("Index");
         }
+        public ActionResult Thoat()
+        {
+            Session["Emai"] = "";
+            Session["HoTen"] = "";
+            return RedirectToAction("Index");
+        }
     }
 }

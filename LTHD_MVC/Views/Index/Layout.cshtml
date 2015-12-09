@@ -13,7 +13,7 @@
     <link href="~/Content/Css/cerulean-bootstrap.css" rel="stylesheet" />
     <script src="~/Script/jquery.min.js"></script>
     <script src="~/Script/bootstrap.min.js"></script>
-       
+
     <style>
         .contain {
             width: 100%;
@@ -132,13 +132,12 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Danh mục sản phẩm <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li class="dropdown-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
+                                    <li><a href="#">Dell</a></li>
+                                    <li><a href="#">Hp</a></li>
+                                    <li><a href="#">Acer</a></li>
+                                    <li><a href="#">Asus</a></li>
+                                    <li><a href="#">Apple</a></li>
+                                    <li><a href="#">SamSung</a></li>
                                 </ul>
                             </li>
                             <li><a href="#">Top xem nhiều nhất</a></li>
@@ -167,30 +166,32 @@
                     </a>
                 </div>
                 <div class="sub-box-right">
-                @if (Session["HoTen"] == null && Session["Email"] == null)
-                {
-                    <p class="sub-box-left">Thành viên</p>
-                    <div style="padding:0px 5px">
-                        <form method="post" id="FormDangNhap" action="/Index/DangNhap">
-                            <div class="form-group">
-                                <input name="Email" class="form-control" type="text" id="TenDangNhap" placeholder="Tên Đăng Nhập" value="">
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Mật khẩu" type="password" id="MatKhau" name="Matkhau" value="">
-                            </div>
-                            <input type="submit" class="btn btn-primary" name="dangnhap" value="Đăng nhập" id="DangNhap">
-                            <a href="/Index/DangKy"><input type="button" class="btn btn-primary" onclick="TruocDangKy()" value="Đăng ký" /></a>
+                    @if (Session["HoTen"] == null && Session["Email"] == null)
+                    {
+                        <p class="sub-box-left">Thành viên</p>
+                        <div style="padding:0px 5px">
+                            <form method="post" id="FormDangNhap" action="/Index/DangNhap">
+                                <div class="form-group">
+                                    <input name="Email" class="form-control" type="text" id="TenDangNhap" placeholder="Tên Đăng Nhập" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Mật khẩu" type="password" id="MatKhau" name="Matkhau" value="">
+                                </div>
+                                <input type="submit" class="btn btn-primary" name="dangnhap" value="Đăng nhập" id="DangNhap">
+                                <a href="/Index/DangKy"><input type="button" class="btn btn-primary" onclick="TruocDangKy()" value="Đăng ký" /></a>
 
-                        </form>
-                    </div>
-                }
-                else
-                {
-                    <p class="sub-box-left">Xin chào @Session["HoTen"]</p>
-                    <div style="padding:0px 5px">
-                        ....................
-                    </div>
-                }
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="sub-box-right">
+                            <p class="sub-box-left">Xin Chào</p>
+                            <p class="sub-box-left-dangnhap">@Session["HoTen"]</p>
+                            <a href="/Index/Thoat"><input type="button" class="btn btn-primary" name=" thoat" value="Thoát" id="Thoat"></a>
+                        </div>
+
+                    }
                 </div>
                 <div class="sub-box-right">
                     <p class="sub-box-left">Giỏ hàng</p>
@@ -198,17 +199,6 @@
                     <p> 0 sản phẩm</p>
                     <img src="~/Content/Image/shoppingcart.png" />
                 </div>
-
-                @*else
-                        {
-                            <div class="sub-box-right">
-                                <p class="sub-box-left">Xin Chào</p>
-                                <p class="sub-box-left-dangnhap">@Session["Ten"]</p>
-
-                                <a href="/Index/Thoat"><input type="button" name=" thoat" value="Thoát" id="Thoat"></a>
-                            </div>
-                        }
-                    }*@
             </div>
         </div>
 
@@ -244,4 +234,4 @@
         });
         return false;
     }
-    </script>
+</script>
