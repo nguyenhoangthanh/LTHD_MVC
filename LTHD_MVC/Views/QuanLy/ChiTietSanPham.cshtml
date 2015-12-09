@@ -1,0 +1,73 @@
+﻿@using LTHD_MVC.Models;
+@{
+    ViewBag.Title = "Chi tiết sản Phẩm - Quản lý sản phẩm - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý sản phẩm - Chi tiết sản Phẩm";
+    ViewBag.ClassSanPham = "active";
+    Layout = "~/Views/QuanLy/Layout.cshtml";
+    SanPham sp = (SanPham)ViewBag.SanPham;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <form class="form-horizontal" id="FormThemMoi">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Tên sản phẩm </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@sp.TenSP" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-nhacungcap"> Nhà cung cấp </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ViewBag.TenNhaCC" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> HDD </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@sp.HDD GB" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> RAM </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@sp.RAM GB" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> CPU </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@sp.CPU" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Đơn giá </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@sp.DonGia VNĐ" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Hình ảnh </label>
+                <div class="col-sm-4">
+                    <img src ="/Hinh/MayTinh/sanpham/@sp.HinhAnh" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Bảo hành </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@sp.BaoHanh" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Số lượng </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@sp.SoLuong" disabled="disabled" />
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <a href="javascript:history.back();" class="btn btn-success no-border"><i class="ace-icon fa fa-reply icon-only bigger-110"></i> Quay về </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -38,17 +38,15 @@ namespace LTHD_MVC.Controllers
             return View();
         }
 
-        public ActionResult XuLyThemSanPham(FormCollection fc)
+        public int XuLyThemSanPham(FormCollection fc)
         {
-            Session["Status"] = 0;
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
                 {
                     SanPham sp = new SanPham();
                     sp.TenSP = fc["tensanpham"].ToString();
-                    //sp.NhaCungCap = db.NhaCungCap.Find(Int32.Parse(fc["nhacungcap"].ToString()));
-                    sp.Id_NCC = Int32.Parse(fc["nhacungcap"].ToString());
+                    sp.NhaCungCap = db.NhaCungCap.Find(Int32.Parse(fc["nhacungcap"].ToString()));
                     sp.HDD = fc["hdd"].ToString();
                     sp.RAM = fc["ram"].ToString();
                     sp.CPU = fc["cpu"].ToString();
@@ -63,29 +61,29 @@ namespace LTHD_MVC.Controllers
                     }
                     sp.BaoHanh = fc["baohanh"].ToString() + " tháng";
                     sp.SoLuong = Int32.Parse(fc["soluong"].ToString());
-                    sp.TrangThai = fc["trangthai"].ToString() == "on" ? 1 : 0;
+                    sp.TrangThai = 1; // fc["trangthai"] == null ? 1 : 0;
 
                     db.SanPham.Add(sp);
                     db.SaveChanges();
 
-                    Session["Status"] = 1;
-                    return RedirectToAction("SanPham");
+                    return 1;
                 }
             }
-            catch (DbEntityValidationException dbEx)
+            catch
             {
-                foreach (var validationErrors in dbEx.EntityValidationErrors)
-                {
-                    foreach (var validationError in validationErrors.ValidationErrors)
-                    {
-                        Trace.TraceInformation("Property: {0} Error: {1}",
-                                                validationError.PropertyName,
-                                                validationError.ErrorMessage);
-                    }
-                }
-                Session["Status"] = -1;
-                return RedirectToAction("ThemSanPham");
+                return -1;
             }
+        }
+
+        public ActionResult ChiTietSanPham(int ID)
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                SanPham sp = db.SanPham.Find(ID);
+                ViewBag.SanPham = sp;
+                ViewBag.TenNhaCC = sp.NhaCungCap.TenNhaCC;
+            }
+            return View();
         }
 
 

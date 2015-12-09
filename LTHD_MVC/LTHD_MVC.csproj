@@ -324,6 +324,7 @@
     <Content Include="assets\js\spin.min.js" />
     <Content Include="assets\js\typeahead.jquery.min.js" />
     <Content Include="assets\swf\copy_csv_xls_pdf.swf" />
+    <Content Include="Content\Css\bootstrap-dialog.min.css" />
     <Content Include="Content\Css\bootstrap.min.css" />
     <Content Include="Content\Css\cerulean-bootstrap.css" />
     <Content Include="Content\Image\bg-footer.png" />
@@ -368,6 +369,15 @@
     <Content Include="Hinh\MayTinh\sanpham\ss_05.jpg" />
     <Content Include="Hinh\MayTinh\sanpham\ss_06.jpg" />
     <Content Include="Hinh\MayTinh\sanpham\ss_07.jpg" />
+    <Content Include="assets\font-awesome\4.1.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\font-awesome\4.1.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\font-awesome\4.1.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\font-awesome\4.2.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="assets\font-awesome\4.2.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="assets\font-awesome\4.2.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -376,6 +386,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Script\bootstrap-dialog.min.js" />
     <Content Include="Script\bootstrap.min.js" />
     <Content Include="Script\jquery.min.js" />
     <Content Include="Web.config" />
@@ -388,6 +399,7 @@
     <Content Include="Views\Web.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\QuanLy\ThemSanPham.cshtml" />
+    <Content Include="Views\QuanLy\ChiTietSanPham.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -421,17 +433,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\QuanLy\ThongKe.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="assets\font-awesome\4.1.0\fonts\fontawesome-webfont.eot" />
-    <Content Include="assets\font-awesome\4.1.0\fonts\fontawesome-webfont.ttf" />
-    <Content Include="assets\font-awesome\4.1.0\fonts\fontawesome-webfont.woff" />
-    <Content Include="assets\font-awesome\4.2.0\fonts\fontawesome-webfont.eot" />
-    <Content Include="assets\font-awesome\4.2.0\fonts\fontawesome-webfont.ttf" />
-    <Content Include="assets\font-awesome\4.2.0\fonts\fontawesome-webfont.woff" />
-    <Content Include="assets\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="assets\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="assets\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\QuanLy\SanPham.cshtml" />
