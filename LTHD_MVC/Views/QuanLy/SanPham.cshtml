@@ -44,7 +44,7 @@
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a class="blue" title="Thêm mới" href="/QuanLy/SanPham/ChiTietSanPham/@sp.Id"><i class="ace-icon fa fa-search-plus bigger-230"></i></a>
                                     <a class="green" title="Chỉnh sửa" href="/QuanLy/SanPham/CapNhatSanPham/@sp.Id"><i class="ace-icon fa fa-pencil bigger-230"></i></a>
-                                    <a class="red" title="Xóa" href="/QuanLy/SanPham/XoaSanPham/@sp.Id"><i class="ace-icon fa fa-trash-o bigger-230"></i></a>
+                                    <a class="red" title="Xóa" href="#" onclick="ConfirmDelete(@sp.Id)"><i class="ace-icon fa fa-trash-o bigger-230"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -62,4 +62,37 @@
     $(document).ready(function () {
         $('#myTable').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
     });
+
+    function ConfirmDelete(id) {
+        BootstrapDialog.confirm({
+            title: 'Cảnh báo',
+            message: 'Bạn có muốn xóa sản phẩm này?',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            draggable: true, // <-- Default value is false
+            btnOKClass: 'btn-danger', // <-- If you didn't specify it, dialog type will be used,
+            callback: function (result) {
+                // result will be true if button was click, while it will be false if users close the dialog directly.
+                if (result) {
+                    $.ajax({
+                        url: '/QuanLy/SanPham/XuLyXoaSanPham',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (data) {
+                            if (data == 1) {
+                                BootstrapDialog.alert('Xóa thành công', function () {
+                                    location.href = '/QuanLy/SanPham';
+                                });
+                            }
+                            else {
+                                BootstrapDialog.alert('Có lỗi trong khi xóa, vui lòng thử lại!', function () {
+                                    location.href = '/QuanLy/SanPham';
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
 </script>
