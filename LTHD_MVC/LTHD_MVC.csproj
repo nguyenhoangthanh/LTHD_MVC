@@ -169,6 +169,15 @@
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TinhTrangDonDH.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
@@ -334,6 +343,7 @@
     <Content Include="Content\Image\shoppingcart.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Hinh\BanDo\bando.PNG" />
     <Content Include="Hinh\MayTinh\acer_01.jpg" />
     <Content Include="Hinh\MayTinh\sanpham\acer_01.jpg" />
     <Content Include="Hinh\MayTinh\sanpham\acer_02.jpg" />
@@ -400,6 +410,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\QuanLy\ThemSanPham.cshtml" />
     <Content Include="Views\QuanLy\ChiTietSanPham.cshtml" />
+    <Content Include="Views\Index\HienThiSPNhaSX.cshtml" />
+    <Content Include="Views\Index\BaoHanh.cshtml" />
+    <Content Include="Views\Index\LienHe.cshtml" />
+    <Content Include="Views\Index\GioiThieu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
