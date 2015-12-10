@@ -1,0 +1,64 @@
+﻿@using LTHD_MVC.Models;
+@{
+    ViewBag.Title = "Cập nhật nhà cung cấp - Quản lý nhà cung cấp - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý nhà cung cấp - Cập nhật nhà cung cấp";
+    ViewBag.ClassNhaCungCap = "active";
+    Layout = "~/Views/QuanLy/Layout.cshtml";
+    NhaCungCap ncc = (NhaCungCap)ViewBag.NhaCungCap;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <form class="form-horizontal" id="FormThemMoi">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Tên nhà cung cấp </label>
+                <div class="col-sm-9">
+                    <input type="text" name="tennhacungcap" id="tennhacungcap" class="col-xs-10 col-sm-5" required value="@ncc.TenNhaCC" />
+                    <input type="hidden" name="idnhacungcap" id="idnhacungcap" value="@ncc.Id" />
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info no-border" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Cập nhật
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="javascript:history.back();" class="btn no-border" type="button">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        Quay về
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#FormThemMoi').submit(function () {
+            $.ajax({
+                url: '/QuanLy/NhaCungCap/XuLyCapNhatNhaCungCap',
+                type: 'POST',
+                data: new FormData(this),
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == 1) {
+                        BootstrapDialog.alert('Cập nhật thành công', function () {
+                            location.href = '/QuanLy/NhaCungCap';
+                        });
+                    }
+                    else if (data == -2) {
+                        BootstrapDialog.alert('Nhà cung cấp này đã tồn tại trên hệ thống!');
+                    }
+                    else {
+                        BootstrapDialog.alert('Có lỗi trong khi cập nhật, vui lòng thử lại!');
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>

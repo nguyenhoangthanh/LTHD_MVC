@@ -16,6 +16,7 @@ namespace LTHD_MVC.Controllers
         {
             return View();
         }
+        #region Sản phẩm
         public ActionResult SanPham()
         {
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -151,12 +152,123 @@ namespace LTHD_MVC.Controllers
                 return -1;
             }
         }
+        #endregion Sản phẩm
 
-
+        #region Nhà cung cấp
         public ActionResult NhaCungCap()
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.Where(i => i.TrangThai == 1).ToList();
+                ViewBag.ListNhaCungCap = ListNhaCungCap;
+            }
+            return View();
+        }
+
+        public ActionResult ThemNhaCungCap()
         {
             return View();
         }
+
+        public int XuLyThemNhaCungCap(FormCollection fc)
+        {
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    // check trùng tên
+                    string tennhacungcap = fc["tennhacungcap"].ToString();
+                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap).FirstOrDefault();
+                    if (_ncc == null)
+                    {
+                        NhaCungCap ncc = new NhaCungCap();
+                        ncc.TenNhaCC = tennhacungcap;
+                        ncc.TrangThai = 1;
+
+                        db.NhaCungCap.Add(ncc);
+                        db.SaveChanges();
+
+                        return 1;
+                    }
+                    else
+                    {
+                        return -2;
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public ActionResult ChiTietNhaCungCap(int ID)
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                NhaCungCap ncc = db.NhaCungCap.Find(ID);
+                ViewBag.NhaCungCap = ncc;
+            }
+            return View();
+        }
+
+        public ActionResult CapNhatNhaCungCap(int ID)
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                NhaCungCap ncc = db.NhaCungCap.Find(ID);
+                ViewBag.NhaCungCap = ncc;
+            }
+            return View();
+        }
+
+        public int XuLyCapNhatNhaCungCap(FormCollection fc)
+        {
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    // check trùng tên
+                    string tennhacungcap = fc["tennhacungcap"].ToString();
+                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap).FirstOrDefault();
+                    if (_ncc == null)
+                    {
+                        NhaCungCap ncc = db.NhaCungCap.Find(Int32.Parse(fc["idnhacungcap"].ToString()));
+                        ncc.TenNhaCC = tennhacungcap;
+                        db.SaveChanges();
+                        return 1;
+                    }
+                    else
+                    {
+                        return -2;
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public int XuLyXoaNhaCungCap(int id)
+        {
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    NhaCungCap ncc = db.NhaCungCap.Find(id);
+                    ncc.TrangThai = 0;
+                    db.SaveChanges();
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        #endregion Nhà cung cấp
+
         public ActionResult NguoiDung()
         {
             return View();
