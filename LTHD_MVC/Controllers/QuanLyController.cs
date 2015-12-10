@@ -20,7 +20,7 @@ namespace LTHD_MVC.Controllers
         {
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
-                List<SanPham> ListSanPham = db.SanPham.ToList();
+                List<SanPham> ListSanPham = db.SanPham.Where(i => i.TrangThai == 1).ToList();
                 List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.ToList();
                 ViewBag.ListSanPham = ListSanPham;
                 ViewBag.ListNhaCungCap = ListNhaCungCap;
@@ -61,7 +61,7 @@ namespace LTHD_MVC.Controllers
                     }
                     sp.BaoHanh = fc["baohanh"].ToString() + " tháng";
                     sp.SoLuong = Int32.Parse(fc["soluong"].ToString());
-                    sp.TrangThai = 1; // fc["trangthai"] == null ? 1 : 0;
+                    sp.TrangThai = 1;
 
                     db.SanPham.Add(sp);
                     db.SaveChanges();
