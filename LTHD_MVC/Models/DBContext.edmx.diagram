@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0b749d7be79b4e0aa62aeb8f2945dc4b" Name="Diagram1" ZoomLevel="125">
+      <Diagram DiagramId="0b749d7be79b4e0aa62aeb8f2945dc4b" Name="Diagram1" ZoomLevel="79">
         <EntityTypeShape EntityType="LTHD_WebLaptopModel.CT_DonDH" Width="1.5" PointX="5.25" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="LTHD_WebLaptopModel.DonDH" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
         <EntityTypeShape EntityType="LTHD_WebLaptopModel.NguoiDung" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
@@ -21,6 +21,7 @@
         <AssociationConnector Association="LTHD_WebLaptopModel.FK_SanPham_NhaCungCap1" ManuallyRouted="false" />
         <AssociationConnector Association="LTHD_WebLaptopModel.FK_PhieuNhap_SanPham" ManuallyRouted="false" />
         <AssociationConnector Association="LTHD_WebLaptopModel.FK_TonKho_SanPham1" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LTHD_WebLaptopModel.sysdiagrams" Width="1.5" PointX="7.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

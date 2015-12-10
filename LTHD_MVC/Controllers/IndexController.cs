@@ -38,6 +38,11 @@ namespace LTHD_MVC.Controllers
         {
             return View();
         }
+        public ActionResult Thoat()
+        {
+            Session["HoTen"] = "";
+            return RedirectToAction("Index");
+        }
 
         public ActionResult XuLyDangKy(FormCollection fc)
         {
@@ -47,8 +52,6 @@ namespace LTHD_MVC.Controllers
             user.DiaChi = fc["DiaChi"].ToString();
             user.DienThoai = fc["DienThoai"].ToString();
             user.Email = fc["Email"].ToString();
-            //user.Id_Quyen=1;
-            //user.TrangThai = 0;
             db.NguoiDung.Add(user);
             db.SaveChanges();
             return View();
@@ -73,5 +76,28 @@ namespace LTHD_MVC.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        //public ActionResult HienThiSPNhaSX(int id_nsx)
+        //{
+        //    List<SanPham> listsp = new List<SanPham>();
+        //    List<NhaCungCap> ncc = new List<NhaCungCap>();
+        //    listsp = db.SanPham.Where(id_nsx = db.NhaCungCap.Id_NCC);
+        //    ViewBag.ListSP = listsp;
+        //    return View();
+        //}
+        public ActionResult BaoHanh()
+        {
+            return View();
+        }
+
+        public ActionResult LienHe()
+        {
+            return View();
+        }
+        public ActionResult GioiThieu()
+        {
+            return View();
+        }
     }
+
 }
