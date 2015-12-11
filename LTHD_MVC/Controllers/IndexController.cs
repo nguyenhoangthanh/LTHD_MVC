@@ -52,8 +52,14 @@ namespace LTHD_MVC.Controllers
             user.DiaChi = fc["DiaChi"].ToString();
             user.DienThoai = fc["DienThoai"].ToString();
             user.Email = fc["Email"].ToString();
+            user.TrangThai = 1;
+            user.KichHoat = 1;
             db.NguoiDung.Add(user);
             db.SaveChanges();
+            return RedirectToAction("DangKyThanhCong", "Index");       
+        }
+        public ActionResult DangKyThanhCong()
+        {
             return View();
         }
         public ActionResult DangNhap(FormCollection fc)

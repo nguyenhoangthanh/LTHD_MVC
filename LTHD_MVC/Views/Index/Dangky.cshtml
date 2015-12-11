@@ -79,8 +79,7 @@
             </tr>
             <tr>
                 <td>
-                    @*<button style="margin-top:10px; " type="button" class="btn btn-primary">Đăng kí</button>*@
-                    <input name="submit" type="submit" value="Đăng ký" class="btn btn-primary" style="margin-top:20px; margin-left:320px;">
+                    <input onclick="return checkPw(form)" name="submit" type="submit" value="Đăng ký" class="btn btn-primary" style="margin-top:20px; margin-left:320px;">
                 </td>
             </tr>
         </table>
@@ -104,7 +103,7 @@
     }
     function DangKy() {
         $.ajax({
-            url: "/Index/DangKy",
+            url: "/Index/XuLyDangKy",
             type: 'POST',
             data: $("#Formdangky").serialize(),
             success: function (data) {
@@ -123,11 +122,15 @@
         return false;
     }
 
-    //function check()
-    //{ var data = new Array();
-    //    data[1] = document.getElementById('password').value;
-    //    data[2] = document.getElementById('cpassword').value;
+    function checkPw(form) {
+        MatKhau = form.MatKhau.value;
+        XacNhanMatKhau = form.XacNhanMatKhau.value;
 
-    //}
+        if (MatKhau != XacNhanMatKhau) {
+            alert ("Mật khẩu không khớp, vui lòng kiểm tra lại")
+            return false;
+        }
+        else return true;
+    }
 </script>
 
