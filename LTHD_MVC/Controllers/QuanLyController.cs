@@ -16,6 +16,21 @@ namespace LTHD_MVC.Controllers
         {
             return View();
         }
+
+        #region Đăng nhập
+        public void KiemTraDangNhap()
+        {
+            if (Session["Admin_Email"] == null)
+            {
+                RedirectToAction("DangNhap");
+            }
+        }
+        public ActionResult DangNhap()
+        {
+            return View();
+        }
+        #endregion Đăng nhập
+
         #region Sản phẩm
         public ActionResult SanPham()
         {
@@ -178,17 +193,27 @@ namespace LTHD_MVC.Controllers
                 {
                     // check trùng tên
                     string tennhacungcap = fc["tennhacungcap"].ToString();
-                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap).FirstOrDefault();
+                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap && i.TrangThai == 1).FirstOrDefault();
                     if (_ncc == null)
                     {
-                        NhaCungCap ncc = new NhaCungCap();
-                        ncc.TenNhaCC = tennhacungcap;
-                        ncc.TrangThai = 1;
+                        _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap && i.TrangThai == 0).FirstOrDefault();
+                        if (_ncc == null)
+                        {
+                            NhaCungCap ncc = new NhaCungCap();
+                            ncc.TenNhaCC = tennhacungcap;
+                            ncc.TrangThai = 1;
 
-                        db.NhaCungCap.Add(ncc);
-                        db.SaveChanges();
+                            db.NhaCungCap.Add(ncc);
+                            db.SaveChanges();
 
-                        return 1;
+                            return 1;
+                        }
+                        else
+                        {
+                            _ncc.TrangThai = 1;
+                            db.SaveChanges();
+                            return 1;
+                        }
                     }
                     else
                     {
@@ -200,16 +225,6 @@ namespace LTHD_MVC.Controllers
             {
                 return -1;
             }
-        }
-
-        public ActionResult ChiTietNhaCungCap(int ID)
-        {
-            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-            {
-                NhaCungCap ncc = db.NhaCungCap.Find(ID);
-                ViewBag.NhaCungCap = ncc;
-            }
-            return View();
         }
 
         public ActionResult CapNhatNhaCungCap(int ID)
@@ -269,10 +284,128 @@ namespace LTHD_MVC.Controllers
         }
         #endregion Nhà cung cấp
 
+        #region Người dùng
         public ActionResult NguoiDung()
         {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<NguoiDung> ListNguoiDung = db.NguoiDung.Where(i => i.TrangThai == 1).ToList();
+                ViewBag.ListNguoiDung = ListNguoiDung;
+
+                List<Quyen> ListQuyen = db.Quyen.ToList();
+                ViewBag.ListQuyen = ListQuyen;
+            }
             return View();
         }
+
+        public ActionResult ThemNguoiDung()
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<Quyen> ListQuyen = db.Quyen.ToList();
+                ViewBag.ListQuyen = ListQuyen;
+            }
+            return View();
+        }
+
+        public int XuLyThemNguoiDung(FormCollection fc)
+        {
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    // check trùng tên
+                    string tennhacungcap = fc["tennhacungcap"].ToString();
+                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap && i.TrangThai == 1).FirstOrDefault();
+                    if (_ncc == null)
+                    {
+                        _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap && i.TrangThai == 0).FirstOrDefault();
+                        if (_ncc == null)
+                        {
+                            NhaCungCap ncc = new NhaCungCap();
+                            ncc.TenNhaCC = tennhacungcap;
+                            ncc.TrangThai = 1;
+
+                            db.NhaCungCap.Add(ncc);
+                            db.SaveChanges();
+
+                            return 1;
+                        }
+                        else
+                        {
+                            _ncc.TrangThai = 1;
+                            db.SaveChanges();
+                            return 1;
+                        }
+                    }
+                    else
+                    {
+                        return -2;
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public ActionResult CapNhatNguoiDung(int ID)
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                NhaCungCap ncc = db.NhaCungCap.Find(ID);
+                ViewBag.NhaCungCap = ncc;
+            }
+            return View();
+        }
+
+        public int XuLyCapNhatNguoiDung(FormCollection fc)
+        {
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    // check trùng tên
+                    string tennhacungcap = fc["tennhacungcap"].ToString();
+                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap).FirstOrDefault();
+                    if (_ncc == null)
+                    {
+                        NhaCungCap ncc = db.NhaCungCap.Find(Int32.Parse(fc["idnhacungcap"].ToString()));
+                        ncc.TenNhaCC = tennhacungcap;
+                        db.SaveChanges();
+                        return 1;
+                    }
+                    else
+                    {
+                        return -2;
+                    }
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public int XuLyXoaNguoiDung(int id)
+        {
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    NhaCungCap ncc = db.NhaCungCap.Find(id);
+                    ncc.TrangThai = 0;
+                    db.SaveChanges();
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        #endregion Người dùng
         public ActionResult PhieuNhap()
         {
             return View();

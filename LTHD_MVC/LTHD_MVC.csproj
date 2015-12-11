@@ -420,6 +420,8 @@
     <Content Include="Views\QuanLy\CapNhatNhaCungCap.cshtml" />
     <Content Include="Views\QuanLy\ThemNhaCungCap.cshtml" />
     <Content Include="Views\Index\DangKyThanhCong.cshtml" />
+    <Content Include="Views\QuanLy\ThemNguoiDung.cshtml" />
+    <Content Include="Views\QuanLy\DangNhap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
