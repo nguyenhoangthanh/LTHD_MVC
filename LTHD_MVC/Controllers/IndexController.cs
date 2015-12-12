@@ -56,7 +56,7 @@ namespace LTHD_MVC.Controllers
             user.KichHoat = 1;
             db.NguoiDung.Add(user);
             db.SaveChanges();
-            return RedirectToAction("DangKyThanhCong", "Index");       
+            return RedirectToAction("DangKyThanhCong");       
         }
         public ActionResult DangKyThanhCong()
         {
@@ -83,14 +83,13 @@ namespace LTHD_MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        //public ActionResult HienThiSPNhaSX(int id_nsx)
-        //{
-        //    List<SanPham> listsp = new List<SanPham>();
-        //    List<NhaCungCap> ncc = new List<NhaCungCap>();
-        //    listsp = db.SanPham.Where(id_nsx = db.NhaCungCap.Id_NCC);
-        //    ViewBag.ListSP = listsp;
-        //    return View();
-        //}
+        public ActionResult HienThiSPNhaSX(int Id_NCC)
+        {
+            List<SanPham> listspnsx = new List<SanPham>();
+            listspnsx = db.SanPham.Where(p => p.Id_NCC == Id_NCC && p.TrangThai == 1).ToList();
+            ViewBag.ListSP = listspnsx;
+            return View();
+        }
         public ActionResult BaoHanh()
         {
             return View();
