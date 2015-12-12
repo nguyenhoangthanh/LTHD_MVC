@@ -1,0 +1,141 @@
+﻿@using LTHD_MVC.Models;
+@{
+    ViewBag.Title = "Thêm người dùng - Quản lý người dùng - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý người dùng - Thêm người dùng";
+    ViewBag.ClassNguoiDung = "active";
+    Layout = "~/Views/QuanLy/Layout.cshtml";
+    List<Quyen> ListQuyen = (List<Quyen>)ViewBag.ListQuyen;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <form class="form-horizontal" id="FormThemMoi">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Tên người dùng </label>
+                <div class="col-sm-9">
+                    <input type="text" name="tenNguoiDung" id="tenNguoiDung" class="col-xs-10 col-sm-5" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-nhacungcap"> Nhà cung cấp </label>
+                <div class="col-sm-9">
+                    <select class="col-xs-10 col-sm-5" name="nhacungcap">
+                        
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> HDD </label>
+                <div class="col-sm-9">
+                    <input type="number" name="hdd" min="1" value="1" class="col-xs-2 col-sm-1" required />
+                    <label class="control-label no-padding-right" style="margin-left: 10px;"> GB </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> RAM </label>
+                <div class="col-sm-9">
+                    <input type="number" name="ram" min="1" value="1" class="col-xs-2 col-sm-1" required />
+                    <label class="control-label no-padding-right" style="margin-left: 10px;"> GB </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> CPU </label>
+                <div class="col-sm-9">
+                    <input type="text" name="cpu" class="col-xs-10 col-sm-5" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Đơn giá </label>
+                <div class="col-sm-9">
+                    <input type="number" name="dongia" min="1" value="1" class="col-xs-4 col-sm-2" required />
+                    <label class="control-label no-padding-right" style="margin-left: 10px;"> VNĐ </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Hình ảnh </label>
+                <div class="col-sm-4">
+                    <input type="file" name="hinh" id="hinh" class="col-xs-4 col-sm-2" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Bảo hành </label>
+                <div class="col-sm-9">
+                    <input type="number" name="baohanh" min="1" max="36" value="1" class="col-xs-4 col-sm-2" required />
+                    <label class="control-label no-padding-right" style="margin-left: 10px;"> Tháng </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Số lượng </label>
+                <div class="col-sm-9">
+                    <input type="number" name="soluong" min="1" value="1" class="col-xs-4 col-sm-2" required />
+                </div>
+            </div>
+            @*<div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> Trạng thái </label>
+                    <div class="checkbox col-sm-9">
+                        <label>
+                            <input name="trangthai" type="checkbox" class="ace" checked="checked">
+                            <span class="lbl"> Mở</span>
+                        </label>
+                    </div>
+                </div>*@
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info no-border" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Thêm mới
+                    </button>
+
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn no-border" type="reset">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        Làm lại
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#hinh').ace_file_input({
+            no_file: 'No File ...',
+            btn_choose: 'Choose',
+            btn_change: 'Change',
+            droppable: false,
+            onchange: null,
+            thumbnail: true,
+            whitelist: 'gif|png|jpg|jpeg',
+            blacklist: 'exe|php'
+        });
+
+        $('#FormThemMoi').submit(function () {
+            $.ajax({
+                url: '/QuanLy/NguoiDung/XuLyThemNguoiDung',
+                type: 'POST',
+                data: new FormData(this),
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == 1) {
+                        BootstrapDialog.confirm('Thêm thành công, bạn có muốn tiếp tục thêm?', function (result) {
+                            if (result) {
+                                $('#FormThemMoi')[0].reset();
+                                $('.remove').click();
+                                $('#tenNguoiDung').focus();
+                            } else {
+                                location.href = '/QuanLy/NguoiDung';
+                            }
+                        });
+
+                    }
+                    else {
+                        BootstrapDialog.alert('Có lỗi trong khi thêm, vui lòng thử lại!');
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
