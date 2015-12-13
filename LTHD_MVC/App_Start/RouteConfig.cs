@@ -34,6 +34,12 @@ namespace LTHD_MVC
             );
 
             routes.MapRoute(
+                name: "PhieuNhap",
+                url: "QuanLy/PhieuNhap/{action}/{id}",
+                defaults: new { controller = "QuanLy", action = "PhieuNhap", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "QuanLy",
                 url: "QuanLy/{action}",
                 defaults: new { controller = "QuanLy", action = "ThongKe", id = UrlParameter.Optional }

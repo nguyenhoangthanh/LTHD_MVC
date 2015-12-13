@@ -1,10 +1,93 @@
 ﻿@using LTHD_MVC.Models;
 @{
-    ViewBag.Title = "Quản lý sản phẩm - Admin Control Panel - Thế giới máy tính";
-    ViewBag.BreadCrumb = "Quản lý sản phẩm";
-    ViewBag.ClassSanPham = "active";
+    ViewBag.Title = "Quản lý phiếu nhập - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý phiếu nhập";
+    ViewBag.ClassPhieuNhap = "active";
     Layout = "~/Views/QuanLy/Layout.cshtml";
-    List<SanPham> list = (List<SanPham>)ViewBag.ListSanPham;
+    List<PhieuNhap> ListPhieuNhap = (List<PhieuNhap>)ViewBag.ListPhieuNhap;
+    List<SanPham> ListSanPham = (List<SanPham>)ViewBag.ListSanPham;
+    int stt = 1;
 }
+<div class="row">
+    <div class="col-xs-12">
+        <div style="margin-bottom:10px;">
+            <a class="btn btn-success no-border" href="/QuanLy/PhieuNhap/ThemPhieuNhap">
+                <i class="ace-icon fa fa-plus bigger-120"></i>
+                Thêm mới
+            </a>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr style="background-color: #5bc0de; color: white; background-image: none;">
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Ngày nhập</th>
+                        <th>Số lượng</th>
+                        <th>Công cụ</th>
+                    </tr>
+                </thead>
 
-<h2>PhieuNhap</h2>
+                <tbody id="myTable">
+                    @foreach (PhieuNhap pn in ListPhieuNhap)
+                    {
+                        <tr>
+                            <td class="center">@(stt++)</td>
+                            <td>@ListSanPham.Where(i => i.Id == pn.Id_SP).FirstOrDefault().TenSP</td>
+                            <td>@pn.NgayNhap.ToString("dd/MM/yyyy")</td>
+                            <td>@pn.SoLuong</td>
+                            <td class="center">
+                                <div class="hidden-sm hidden-xs action-buttons">
+                                    <a class="green" title="Chỉnh sửa" href="/QuanLy/PhieuNhap/CapNhatPhieuNhap/@pn.Id_PhieuNhap"><i class="ace-icon fa fa-pencil bigger-230"></i></a>
+                                    @*<a class="red" title="Xóa" href="#" onclick="ConfirmDelete(@pn.Id_PhieuNhap)"><i class="ace-icon fa fa-trash-o bigger-230"></i></a>*@
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 text-center">
+            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
+    });
+
+    function ConfirmDelete(id) {
+        BootstrapDialog.confirm({
+            title: 'Cảnh báo',
+            message: 'Bạn có muốn xóa phiếu nhập này?',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            draggable: true, // <-- Default value is false
+            btnOKClass: 'btn-danger', // <-- If you didn't specify it, dialog type will be used,
+            callback: function (result) {
+                // result will be true if button was click, while it will be false if users close the dialog directly.
+                if (result) {
+                    $.ajax({
+                        url: '/QuanLy/PhieuNhap/XuLyXoaPhieuNhap',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (data) {
+                            if (data == 1) {
+                                BootstrapDialog.alert('Xóa thành công', function () {
+                                    location.href = '/QuanLy/PhieuNhap';
+                                });
+                            }
+                            else {
+                                BootstrapDialog.alert('Có lỗi trong khi xóa, vui lòng thử lại!', function () {
+                                    location.href = '/QuanLy/PhieuNhap';
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+</script>

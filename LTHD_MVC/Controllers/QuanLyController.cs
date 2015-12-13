@@ -13,15 +13,20 @@ namespace LTHD_MVC.Controllers
 {
     public class QuanLyController : Controller
     {
+        #region Thống kê
         public ActionResult ThongKe()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             return View();
         }
+        #endregion Thống kê
 
         #region Đăng nhập
         public bool KiemTraDangNhap()
         {
-            Session["Path_URL"] = Path.GetFileName(Request.Url.AbsolutePath);
+            Session["Path_URL"] = Request.Url.AbsolutePath;
             if (Session["Admin_Email"] == null)
             {
                 return false;
@@ -32,7 +37,7 @@ namespace LTHD_MVC.Controllers
         {
             return View();
         }
-        public int XuLyDangNhap(FormCollection fc)
+        public string XuLyDangNhap(FormCollection fc)
         {
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
@@ -41,12 +46,15 @@ namespace LTHD_MVC.Controllers
                 NguoiDung nd = db.NguoiDung.Where(i => i.Email == email && i.MatKhau == password).FirstOrDefault();
                 if (nd == null)
                 {
-                    return -1;
+                    return "-1";
                 }
                 else
                 {
                     Session["Admin_Email"] = email;
-                    return 1;
+                    Session["Admin_Hoten"] = nd.HoTen;
+                    if (Session["Path_URL"] == null)
+                        Session["Path_URL"] = "/QuanLy";
+                    return Session["Path_URL"].ToString();
                 }
             }
         }
@@ -70,6 +78,9 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult ThemSanPham()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.ToList();
@@ -80,6 +91,8 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyThemSanPham(FormCollection fc)
         {
+            if (!KiemTraDangNhap())
+                return -1;
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -117,6 +130,9 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult ChiTietSanPham(int ID)
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 SanPham sp = db.SanPham.Find(ID);
@@ -128,6 +144,9 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult CapNhatSanPham(int ID)
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 SanPham sp = db.SanPham.Find(ID);
@@ -141,6 +160,9 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyCapNhatSanPham(FormCollection fc)
         {
+            if (!KiemTraDangNhap())
+                return -1;
+
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -176,6 +198,9 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyXoaSanPham(int id)
         {
+            if (!KiemTraDangNhap())
+                return -1;
+
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -196,6 +221,9 @@ namespace LTHD_MVC.Controllers
         #region Nhà cung cấp
         public ActionResult NhaCungCap()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.Where(i => i.TrangThai == 1).ToList();
@@ -206,11 +234,17 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult ThemNhaCungCap()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             return View();
         }
 
         public int XuLyThemNhaCungCap(FormCollection fc)
         {
+            if (!KiemTraDangNhap())
+                return -1;
+
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -253,6 +287,9 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult CapNhatNhaCungCap(int ID)
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 NhaCungCap ncc = db.NhaCungCap.Find(ID);
@@ -263,6 +300,9 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyCapNhatNhaCungCap(FormCollection fc)
         {
+            if (!KiemTraDangNhap())
+                return -1;
+
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -291,6 +331,9 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyXoaNhaCungCap(int id)
         {
+            if (!KiemTraDangNhap())
+                return -1;
+
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -311,6 +354,9 @@ namespace LTHD_MVC.Controllers
         #region Người dùng
         public ActionResult NguoiDung()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<NguoiDung> ListNguoiDung = db.NguoiDung.Where(i => i.TrangThai == 1).ToList();
@@ -324,6 +370,9 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult ThemNguoiDung()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<Quyen> ListQuyen = db.Quyen.ToList();
@@ -334,6 +383,9 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyThemNguoiDung(FormCollection fc)
         {
+            if (!KiemTraDangNhap())
+                return -1;
+
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -376,6 +428,9 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult CapNhatNguoiDung(int ID)
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 NhaCungCap ncc = db.NhaCungCap.Find(ID);
@@ -386,6 +441,9 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyCapNhatNguoiDung(FormCollection fc)
         {
+            if (!KiemTraDangNhap())
+                return -1;
+
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -414,6 +472,8 @@ namespace LTHD_MVC.Controllers
 
         public int XuLyXoaNguoiDung(int id)
         {
+            if (!KiemTraDangNhap())
+                return -1;
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
@@ -430,10 +490,121 @@ namespace LTHD_MVC.Controllers
             }
         }
         #endregion Người dùng
+        
+        #region Phiếu nhập
         public ActionResult PhieuNhap()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<SanPham> ListSanPham = db.SanPham.ToList();
+                List<PhieuNhap> ListPhieuNhap = db.PhieuNhap.ToList();
+                ViewBag.ListSanPham = ListSanPham;
+                ViewBag.ListPhieuNhap = ListPhieuNhap;
+            }
             return View();
         }
+
+        public ActionResult ThemPhieuNhap()
+        {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<SanPham> ListSanPham = db.SanPham.Where(i => i.TrangThai == 1).ToList();
+                ViewBag.ListSanPham = ListSanPham;
+            }
+            return View();
+        }
+
+        public int XuLyThemPhieuNhap(FormCollection fc)
+        {
+            if (!KiemTraDangNhap())
+                return -1;
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    PhieuNhap pn = new PhieuNhap();
+                    pn.NgayNhap = Convert.ToDateTime(fc["ngaynhap"].ToString());
+                    pn.SanPham = db.SanPham.Find(Int32.Parse(fc["sanpham"].ToString()));
+                    pn.SoLuong = int.Parse(fc["soluong"].ToString());
+
+                    db.PhieuNhap.Add(pn);
+                    db.SaveChanges();
+
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public ActionResult CapNhatPhieuNhap(int ID)
+        {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                PhieuNhap pn = db.PhieuNhap.Find(ID);
+                ViewBag.PhieuNhap = pn;
+
+                List<SanPham> ListSanPham = db.SanPham.ToList();
+                ViewBag.ListSanPham = ListSanPham;
+            }
+            return View();
+        }
+
+        public int XuLyCapNhatPhieuNhap(FormCollection fc)
+        {
+            if (!KiemTraDangNhap())
+                return -1;
+
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    PhieuNhap pn = db.PhieuNhap.Find(Int32.Parse(fc["idphieunhap"].ToString()));
+                    pn.SanPham = db.SanPham.Find(Int32.Parse(fc["sanpham"].ToString()));
+                    pn.NgayNhap = Convert.ToDateTime(fc["ngaynhap"].ToString());
+                    pn.SoLuong = Int32.Parse(fc["soluong"].ToString());
+                    db.SaveChanges();
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public int XuLyXoaPhieuNhap(int id)
+        {
+            if (!KiemTraDangNhap())
+                return -1;
+
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    PhieuNhap pn = db.PhieuNhap.Find(id);
+                    db.PhieuNhap.Remove(pn);
+                    db.SaveChanges();
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        #endregion Phiếu nhập
         public ActionResult DonDatHang()
         {
             return View();
