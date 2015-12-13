@@ -16,9 +16,9 @@ namespace LTHD_MVC
             // Start Quan Ly
 
             routes.MapRoute(
-                name: "QuanLy",
-                url: "QuanLy/{action}",
-                defaults: new { controller = "QuanLy", action = "ThongKe", id = UrlParameter.Optional }
+                name: "DangNhap",
+                url: "QuanLy/DangNhap/{action}/{id}",
+                defaults: new { controller = "QuanLy", action = "DangNhap", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -31,6 +31,12 @@ namespace LTHD_MVC
                 name: "NhaCungCap",
                 url: "QuanLy/NhaCungCap/{action}/{id}",
                 defaults: new { controller = "QuanLy", action = "NhaCungCap", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "QuanLy",
+                url: "QuanLy/{action}",
+                defaults: new { controller = "QuanLy", action = "ThongKe", id = UrlParameter.Optional }
             );
 
             // End Quan Ly

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,22 +19,45 @@ namespace LTHD_MVC.Controllers
         }
 
         #region Đăng nhập
-        public void KiemTraDangNhap()
+        public bool KiemTraDangNhap()
         {
+            Session["Path_URL"] = Path.GetFileName(Request.Url.AbsolutePath);
             if (Session["Admin_Email"] == null)
             {
-                RedirectToAction("DangNhap");
+                return false;
             }
+            return true;
         }
         public ActionResult DangNhap()
         {
             return View();
+        }
+        public int XuLyDangNhap(FormCollection fc)
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                string email = fc["email"].ToString();
+                string password = fc["password"].ToString();
+                NguoiDung nd = db.NguoiDung.Where(i => i.Email == email && i.MatKhau == password).FirstOrDefault();
+                if (nd == null)
+                {
+                    return -1;
+                }
+                else
+                {
+                    Session["Admin_Email"] = email;
+                    return 1;
+                }
+            }
         }
         #endregion Đăng nhập
 
         #region Sản phẩm
         public ActionResult SanPham()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<SanPham> ListSanPham = db.SanPham.Where(i => i.TrangThai == 1).ToList();
