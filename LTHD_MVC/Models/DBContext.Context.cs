@@ -36,7 +36,6 @@ namespace LTHD_MVC.Models
         public virtual DbSet<SanPham> SanPham { get; set; }
         public virtual DbSet<TinhTrangDonDH> TinhTrangDonDH { get; set; }
         public virtual DbSet<TonKho> TonKho { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

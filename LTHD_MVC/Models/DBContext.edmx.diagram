@@ -21,7 +21,6 @@
         <AssociationConnector Association="LTHD_WebLaptopModel.FK_SanPham_NhaCungCap1" ManuallyRouted="false" />
         <AssociationConnector Association="LTHD_WebLaptopModel.FK_PhieuNhap_SanPham" ManuallyRouted="false" />
         <AssociationConnector Association="LTHD_WebLaptopModel.FK_TonKho_SanPham1" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="LTHD_WebLaptopModel.sysdiagrams" Width="1.5" PointX="7.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

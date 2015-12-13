@@ -109,7 +109,7 @@ namespace LTHD_MVC.Controllers
             {
 
             }
-            return View();
+            return RedirectToAction("GioHang");
         }
 
         public ActionResult DangKy()
