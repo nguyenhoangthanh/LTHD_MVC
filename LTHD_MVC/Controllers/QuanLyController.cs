@@ -629,9 +629,14 @@ namespace LTHD_MVC.Controllers
 
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
-                SanPham sp = db.SanPham.Find(ID);
-                ViewBag.SanPham = sp;
-                ViewBag.TenNhaCC = sp.NhaCungCap.TenNhaCC;
+                DonDH ddh = db.DonDH.Find(ID);
+                ViewBag.DonDH = ddh;
+                ViewBag.TinhTrang = ddh.TinhTrangDonDH.TinhTrang;
+                List<CT_DonDH> ListCT_DonDH = db.CT_DonDH.Where(i => i.Id_DonDH == ID).ToList();
+                ViewBag.ListCT_DonDH = ListCT_DonDH;
+                ViewBag.Total = db.CT_DonDH.Where(i => i.Id_DonDH == ID).Sum(i => i.DonGia * i.SoLuong);
+                List<SanPham> ListSanPham = db.SanPham.ToList();
+                ViewBag.ListSanPham = ListSanPham;
             }
             return View();
         }

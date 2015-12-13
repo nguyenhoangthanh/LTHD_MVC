@@ -15,6 +15,7 @@
                 <thead>
                     <tr style="background-color: #5bc0de; color: white; background-image: none;">
                         <th>STT</th>
+                        <th>Mã đơn hàng</th>
                         <th>Tên khách hàng</th>
                         <th>Số điện thoại</th>
                         <th>Ngày đặt</th>
@@ -31,6 +32,7 @@
                     {
                         <tr>
                             <td class="center">@(stt++)</td>
+                            <td>MDH @ddh.Id</td>
                             <td>@ddh.HoTen</td>
                             <td>@ddh.DienThoai</td>
                             <td>@ddh.NgayDat.ToString("dd/MM/yyyy")</td>

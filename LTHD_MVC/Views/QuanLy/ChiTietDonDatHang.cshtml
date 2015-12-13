@@ -1,0 +1,112 @@
+﻿@using LTHD_MVC.Models;
+@{
+    ViewBag.Title = "Chi tiết đơn đặt hàng - Quản lý đơn đặt hàng - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý đơn đặt hàng - Chi tiết đơn đặt hàng";
+    ViewBag.ClassDonDatHang = "active";
+    Layout = "~/Views/QuanLy/Layout.cshtml";
+    DonDH ddh = (DonDH)ViewBag.DonDH;
+    List<CT_DonDH> ListCT_DonDH = (List<CT_DonDH>)ViewBag.ListCT_DonDH;
+    List<SanPham> ListSanPham = (List<SanPham>)ViewBag.ListSanPham;
+    int stt = 1;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Mã đơn đặt hàng </label>
+                <div class="col-sm-9">
+                    <input type="text" value="MDH @ddh.Id" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-nhacungcap"> Tên khách hàng </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ddh.HoTen" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Số điện thoại </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ddh.DienThoai" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Địa chỉ </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ddh.DiaChi" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Ngày đặt </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ddh.NgayDat.ToString("dd/MM/yyyy")" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Ngày giao </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ddh.NgayGiao.ToString("dd/MM/yyyy")" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Ghi chú </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ddh.GhiChu" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Tình trạng </label>
+                <div class="col-sm-9">
+                    <input type="text" value="@ViewBag.TinhTrang" disabled="disabled" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr style="background-color: #5bc0de; color: white; background-image: none;">
+                                    <th>STT</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="myTable">
+                                @foreach (CT_DonDH ctdh in ListCT_DonDH)
+                                {
+                                    <tr>
+                                        <td class="center">@(stt++)</td>
+                                        <td>@ListSanPham.Where(i=>i.Id == ctdh.Id_SP).FirstOrDefault().TenSP</td>
+                                        <td>@ctdh.SoLuong</td>
+                                        <td>@ctdh.DonGia</td>
+                                        <td>@(ctdh.SoLuong * ctdh.DonGia)</td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4" align="right">Tổng tiền</td>
+                                    <td>@ViewBag.Total</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="col-xs-12 text-center">
+                        <ul class="pagination pagination-lg pager" id="myPager"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix form-actions">
+                <div class="col-md-12 text-center">
+                    <a href="javascript:history.back();" class="btn btn-success no-border"><i class="ace-icon fa fa-reply icon-only bigger-110"></i> Quay về </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
