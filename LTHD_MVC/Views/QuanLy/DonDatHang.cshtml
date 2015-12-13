@@ -1,10 +1,95 @@
 ﻿@using LTHD_MVC.Models;
 @{
-    ViewBag.Title = "Quản lý sản phẩm - Admin Control Panel - Thế giới máy tính";
-    ViewBag.BreadCrumb = "Quản lý sản phẩm";
-    ViewBag.ClassSanPham = "active";
+    ViewBag.Title = "Quản lý đơn đặt hàng - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý đơn đặt hàng";
+    ViewBag.ClassDonDatHang = "active";
     Layout = "~/Views/QuanLy/Layout.cshtml";
-    List<SanPham> list = (List<SanPham>)ViewBag.ListSanPham;
+    List<DonDH> ListDonDH = (List<DonDH>)ViewBag.ListDonDH;
+    List<TinhTrangDonDH> ListTinhTrangDonDH = (List<TinhTrangDonDH>)ViewBag.ListTinhTrangDonDH;
+    int stt = 1;
 }
+<div class="row">
+    <div class="col-xs-12">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr style="background-color: #5bc0de; color: white; background-image: none;">
+                        <th>STT</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Ngày đặt</th>
+                        <th>Ngày giao</th>
+                        <th>Tổng tiền</th>
+                        <th>Ghi chú</th>
+                        <th>Tình trạng</th>
+                        <th>Công cụ</th>
+                    </tr>
+                </thead>
 
-<h2>DonDatHang</h2>
+                <tbody id="myTable">
+                    @foreach (DonDH ddh in ListDonDH)
+                    {
+                        <tr>
+                            <td class="center">@(stt++)</td>
+                            <td>@ddh.HoTen</td>
+                            <td>@ddh.DienThoai</td>
+                            <td>@ddh.NgayDat.ToString("dd/MM/yyyy")</td>
+                            <td>@ddh.NgayGiao.ToString("dd/MM/yyyy")</td>
+                            <td>@ddh.TongTien</td>
+                            <td>@ddh.GhiChu</td>
+                            <td>@ListTinhTrangDonDH.Where(i=>i.Id == ddh.Id_TinhTrang).FirstOrDefault().TinhTrang</td>
+                            <td class="center">
+                                <div class="hidden-sm hidden-xs action-buttons">
+                                    <a class="blue" title="Chi tiết" href="/QuanLy/DonDatHang/ChiTietDonDatHang/@ddh.Id"><i class="ace-icon fa fa-search-plus bigger-230"></i></a>
+                                    <a class="green" title="Chỉnh sửa" href="/QuanLy/DonDatHang/CapNhatDonDatHang/@ddh.Id"><i class="ace-icon fa fa-pencil bigger-230"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 text-center">
+            <ul class="pagination pagination-lg pager" id="myPager"></ul>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 5 });
+    });
+
+    function ConfirmDelete(id) {
+        BootstrapDialog.confirm({
+            title: 'Cảnh báo',
+            message: 'Bạn có muốn xóa đơn đặt hàng này?',
+            type: BootstrapDialog.TYPE_DANGER, // <-- Default value is BootstrapDialog.TYPE_PRIMARY
+            closable: true, // <-- Default value is false
+            draggable: true, // <-- Default value is false
+            btnOKClass: 'btn-danger', // <-- If you didn't specify it, dialog type will be used,
+            callback: function (result) {
+                // result will be true if button was click, while it will be false if users close the dialog directly.
+                if (result) {
+                    $.ajax({
+                        url: '/QuanLy/DonDatHang/XuLyXoaDonDatHang',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (data) {
+                            if (data == 1) {
+                                BootstrapDialog.alert('Xóa thành công', function () {
+                                    location.href = '/QuanLy/DonDatHang';
+                                });
+                            }
+                            else {
+                                BootstrapDialog.alert('Có lỗi trong khi xóa, vui lòng thử lại!', function () {
+                                    location.href = '/QuanLy/DonDatHang';
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+</script>

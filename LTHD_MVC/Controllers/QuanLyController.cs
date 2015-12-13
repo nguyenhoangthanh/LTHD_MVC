@@ -605,10 +605,91 @@ namespace LTHD_MVC.Controllers
             }
         }
         #endregion Phiếu nhập
+
+        #region Đơn đặt hàng
         public ActionResult DonDatHang()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<DonDH> ListDonDH = db.DonDH.Where(i => i.TrangThai == 1).ToList();
+                List<TinhTrangDonDH> ListTinhTrangDonDH = db.TinhTrangDonDH.ToList();
+                ViewBag.ListDonDH = ListDonDH;
+                ViewBag.ListTinhTrangDonDH = ListTinhTrangDonDH;
+            }
             return View();
         }
+
+        public ActionResult ChiTietDonDatHang(int ID)
+        {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                SanPham sp = db.SanPham.Find(ID);
+                ViewBag.SanPham = sp;
+                ViewBag.TenNhaCC = sp.NhaCungCap.TenNhaCC;
+            }
+            return View();
+        }
+
+        public ActionResult CapNhatDonDatHang(int ID)
+        {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                SanPham sp = db.SanPham.Find(ID);
+                ViewBag.SanPham = sp;
+
+                List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.ToList();
+                ViewBag.ListNhaCungCap = ListNhaCungCap;
+            }
+            return View();
+        }
+
+        public int XuLyCapNhatDonDatHang(FormCollection fc)
+        {
+            if (!KiemTraDangNhap())
+                return -1;
+
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    SanPham sp = db.SanPham.Find(Int32.Parse(fc["idsanpham"].ToString()));
+                    sp.TenSP = fc["tensanpham"].ToString();
+                    sp.NhaCungCap = db.NhaCungCap.Find(Int32.Parse(fc["nhacungcap"].ToString()));
+                    sp.HDD = fc["hdd"].ToString();
+                    sp.RAM = fc["ram"].ToString();
+                    sp.CPU = fc["cpu"].ToString();
+                    sp.DonGia = Double.Parse(fc["dongia"].ToString());
+
+                    HttpPostedFileBase hinh = Request.Files["hinh"];
+                    if ((hinh != null) && (hinh.ContentLength > 0) && !string.IsNullOrEmpty(hinh.FileName))
+                    {
+                        string fileName = StringHelper.DoiTenFile(hinh.FileName);
+                        hinh.SaveAs(Server.MapPath("/Hinh/MayTinh/sanpham/" + fileName));
+                        sp.HinhAnh = fileName;
+                    }
+                    sp.BaoHanh = fc["baohanh"].ToString() + " tháng";
+                    sp.SoLuong = Int32.Parse(fc["soluong"].ToString());
+
+                    db.SaveChanges();
+
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        #endregion Đơn đặt hàng
         public ActionResult TonKho()
         {
             return View();
