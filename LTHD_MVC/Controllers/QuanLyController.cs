@@ -641,22 +641,6 @@ namespace LTHD_MVC.Controllers
             return View();
         }
 
-        public ActionResult CapNhatDonDatHang(int ID)
-        {
-            if (!KiemTraDangNhap())
-                return RedirectToAction("DangNhap");
-
-            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-            {
-                SanPham sp = db.SanPham.Find(ID);
-                ViewBag.SanPham = sp;
-
-                List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.ToList();
-                ViewBag.ListNhaCungCap = ListNhaCungCap;
-            }
-            return View();
-        }
-
         public int XuLyCapNhatDonDatHang(FormCollection fc)
         {
             if (!KiemTraDangNhap())
@@ -666,24 +650,8 @@ namespace LTHD_MVC.Controllers
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
                 {
-                    SanPham sp = db.SanPham.Find(Int32.Parse(fc["idsanpham"].ToString()));
-                    sp.TenSP = fc["tensanpham"].ToString();
-                    sp.NhaCungCap = db.NhaCungCap.Find(Int32.Parse(fc["nhacungcap"].ToString()));
-                    sp.HDD = fc["hdd"].ToString();
-                    sp.RAM = fc["ram"].ToString();
-                    sp.CPU = fc["cpu"].ToString();
-                    sp.DonGia = Double.Parse(fc["dongia"].ToString());
-
-                    HttpPostedFileBase hinh = Request.Files["hinh"];
-                    if ((hinh != null) && (hinh.ContentLength > 0) && !string.IsNullOrEmpty(hinh.FileName))
-                    {
-                        string fileName = StringHelper.DoiTenFile(hinh.FileName);
-                        hinh.SaveAs(Server.MapPath("/Hinh/MayTinh/sanpham/" + fileName));
-                        sp.HinhAnh = fileName;
-                    }
-                    sp.BaoHanh = fc["baohanh"].ToString() + " tháng";
-                    sp.SoLuong = Int32.Parse(fc["soluong"].ToString());
-
+                    DonDH dh = db.DonDH.Find(Int32.Parse(fc["id"].ToString()));
+                    dh.TinhTrangDonDH = db.TinhTrangDonDH.Find(Int32.Parse(fc["tinhtrang"].ToString()));
                     db.SaveChanges();
 
                     return 1;

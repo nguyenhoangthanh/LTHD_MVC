@@ -43,7 +43,7 @@
                             <td class="center">
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a class="blue" title="Chi tiết" href="/QuanLy/DonDatHang/ChiTietDonDatHang/@ddh.Id"><i class="ace-icon fa fa-search-plus bigger-230"></i></a>
-                                    <a class="green" title="Chỉnh sửa" href="/QuanLy/DonDatHang/CapNhatDonDatHang/@ddh.Id"><i class="ace-icon fa fa-pencil bigger-230"></i></a>
+                                    <a class="green" title="Chỉnh sửa" href="#" onclick="UpdateStatus('@ddh.Id','@ddh.HoTen');"><i class="ace-icon fa fa-pencil bigger-230"></i></a>
                                 </div>
                             </td>
                         </tr>
@@ -94,4 +94,46 @@
             }
         });
     }
+
+    function UpdateStatus(madonhang, tenkhachhang) {
+        BootstrapDialog.alert({
+            title: 'Cập nhật tình trạng đơn đặt hàng',
+            message: '<table class="table table-bordered" style="text-alight:left !important">' +
+                '<tr><th>Mã đơn hàng</th><td>MDH ' + madonhang + '</td></tr>' +
+                '<tr><th>Tên khách hàng</th><td>' + tenkhachhang + '</td></tr>' +
+                '<tr><th>Tình trạng</th><td>' +
+                '<select id="tinhtrang" class="form-control">' +
+                '@foreach(TinhTrangDonDH tt in ListTinhTrangDonDH){ <option value = "@tt.Id">@tt.TinhTrang</option> }'
+                +'</select>'
+                +'</td>' +
+                '</tr></table>',
+            type: BootstrapDialog.TYPE_WARNING,
+            closable: true,
+            draggable: true,
+            buttonLabel: 'Cập nhật',
+            btnOKClass: 'btn-warning',
+            callback: function (result) {
+                if (result) {
+                    $.ajax({
+                        url: '/QuanLy/DonDatHang/XuLyCapNhatDonDatHang',
+                        type: 'POST',
+                        data: { id: madonhang, tinhtrang: $("#tinhtrang").val() },
+                        success: function (data) {
+                            if (data == 1) {
+                                BootstrapDialog.alert('Cập nhật thành công', function () {
+                                    location.href = '/QuanLy/DonDatHang';
+                                });
+                            }
+                            else {
+                                BootstrapDialog.alert('Có lỗi trong khi cập nhật, vui lòng thử lại!', function () {
+                                    location.href = '/QuanLy/DonDatHang';
+                                });
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 </script>
