@@ -442,9 +442,6 @@
     <Content Include="Views\Index\GioHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Index\HienThiDSSanPham.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Index\ChiTietSanPham.cshtml" />
   </ItemGroup>
   <ItemGroup>
