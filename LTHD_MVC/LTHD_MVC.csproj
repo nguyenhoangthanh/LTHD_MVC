@@ -131,6 +131,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\GioHang.cs" />
     <Compile Include="Helper\Helper.cs" />
     <Compile Include="Helper\StringHelper.cs" />
     <Compile Include="Models\CT_DonDH.cs">

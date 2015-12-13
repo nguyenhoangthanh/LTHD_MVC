@@ -3,7 +3,8 @@
 @{
     Layout = "~/Views/Index/Layout.cshtml";
     ViewBag.Title = "Index";
-    List<SanPham> listspnsx = (List<SanPham>)ViewBag.listspnsx;
+    var listspnsx = (List<SanPham>)ViewBag.ListSP;
+    var listccc = (List<NhaCungCap>)ViewBag.ListNhaCungCap;
 }
 @foreach (var sp in listspnsx)
     {

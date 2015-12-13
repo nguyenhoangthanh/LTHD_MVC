@@ -3,17 +3,17 @@
     ViewBag.Title = "Dangky";
 }
 <div style="width:50%;">
-    <h3 style="margin-left:120px; ">Đăng kí tài khoản</h3>
-    <form method="post" id="Formdangky" action="/Index/XuLyDangKy">
-        <table>
+    <h3 style="margin-left:190px; ">Đăng kí tài khoản</h3>
+    <form id="Formdangky">
+        <table style="margin-left:130px;">
             <tr>
-                <td colspan="2">
-                    <p style="font-weight: bold; margin-top: 20px;">Họ Tên:</p>
-                </td>
+                <td colspan=2>
+            <p style="font-weight: bold; margin-top: 20px;">Họ Tên:</p>
+            </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <input name="HoTen" style="width:400px;" type="text" class="form-control">
+                    <input name="HoTen" id="HoTen" style="width:400px;" type="text" class="form-control" required>
                 </td>
             </tr>
             <tr>
@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input name="Email" style="width:400px;" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example.com" type="text" class="form-control">
+                    <input name="Email" id="Email" style="width:400px;" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; example.com" type="text" class="form-control" required>
                 </td>
             </tr>
             <tr>
@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input name="MatKhau" id="MatKhau" style="width:400px;" type="password" class="form-control" onkeyup="check()">
+                    <input name="MatKhau" id="MatKhau" style="width:400px;" type="password" class="form-control" >
                 </td>
             </tr>
             <tr>
@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input name="XacNhanMatKhau" id="XacNhanMatKhau" style="width:400px;" type="password" class="form-control" onkeyup="check()">
+                    <input name="XacNhanMatKhau" id="XacNhanMatKhau" style="width:400px;" type="password" class="form-control" >
                 </td>
             </tr>
             <tr>
@@ -53,7 +53,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input style="width:400px;" type="date" name="NGAYSINH" data-date-format="DD MM YYYY" class="ngaysinh">
+                    <input style="width:400px;" type="date" name="NGAYSINH" id="NGAYSINH" data-date-format="DD MM YYYY" class="form-control">
                 </td>
             </tr>
             <tr>
@@ -64,7 +64,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input style="width:400px;" type="text" class="form-control" name="DiaChi">
+                    <input style="width:400px;" type="text" class="form-control" name="DiaChi" id="DiaChi">
                 </td>
             </tr>
             <tr>
@@ -74,12 +74,12 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input style="width:400px;" type="text" class="form-control" name="DienThoai">
+                    <input style="width:400px;" type="text" class="form-control" name="DienThoai" id="DienThoai">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input onclick="return checkPw(form)" name="submit" type="submit" value="Đăng ký" class="btn btn-primary" style="margin-top:20px; margin-left:320px;">
+                    <input onclick="DangKy();" name="submit" type="button" value="Đăng ký" class="btn btn-primary" style="margin-top:20px; margin-left:160px;">
                 </td>
             </tr>
         </table>
@@ -87,21 +87,22 @@
 </div>
 <script>
     function DangKy() {
-        window.location.href = "/Index/DangKy";
-    }
-    function TruocDangKy() {
-        $('.modal-title').html('Đăng ký');
-        $('#DangKy').show();
-        $('#HoTen').val("");
-        $('#Email').val("");
-        $('#MatKhau').val("");
-        $('#XacNhanMatKhau').val("");
-        $('#NgaySinh').val("");
-        $('#DiaChi').val("");
-        $('#SoDienThoai').val("");
-        $('#myModal').modal('show');
-    }
-    function DangKy() {
+        var matkhau = $('#MatKhau').val();
+        var xacnhanmatkhau = $('#XacNhanMatKhau').val();
+
+        if (matkhau != xacnhanmatkhau) {
+            alert("Mật khẩu không khớp, vui lòng kiểm tra lại");
+            return false;
+        }
+
+        var email = $('#Email').val();
+
+        if (!validateEmail(email)) {
+            alert("Email không hợp lệ, vui lòng kiểm tra lại");
+            $('#Email').focus();
+            return false;
+        }
+
         $.ajax({
             url: "/Index/XuLyDangKy",
             type: 'POST',
@@ -111,8 +112,12 @@
 
                 if (data == 1) {
                     BootstrapDialog.alert('Đăng ký thành công', function () {
-                        location.reload();
+                        location.href = '/Index';
                     });
+                }
+                if (email = "#Email")
+                {
+
                 }
                 else {
                     BootstrapDialog.alert('Có lỗi trong khi đăng ký');
@@ -122,15 +127,9 @@
         return false;
     }
 
-    function checkPw(form) {
-        MatKhau = form.MatKhau.value;
-        XacNhanMatKhau = form.XacNhanMatKhau.value;
-
-        if (MatKhau != XacNhanMatKhau) {
-            alert ("Mật khẩu không khớp, vui lòng kiểm tra lại")
-            return false;
-        }
-        else return true;
+    function validateEmail(Email) {
+        var re = /^(([^<>()[\]\\.,;:\s@@"]+(\.[^<>()[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(Email);
     }
 </script>
 

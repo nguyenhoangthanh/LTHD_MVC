@@ -1,27 +1,36 @@
 ﻿@using LTHD_MVC.Models;
+@using LTHD_MVC.Helper;
 @{
     Layout = "~/Views/Index/Layout.cshtml";
-    ViewBag.Title = "GioHang";
+    List<GioHang> listgh = (List<GioHang>)Session["listgiohang"];
+    int stt = 1;    
 }
+
 <h2 style="text-align:center;">Giỏ hàng của bạn</h2>
 <h4 style=" margin-top: 20px; color: #aa1919; font-weight: bold;">Thông tin sản phẩm đã đặt:</h4>
 <table class="table table-bordered">
-    <thead style="background:#766d6d;">
+    <thead style="background:#766d6d; color:white; ">
         <tr>
-            <th>Sản phẩm ID</th>
+            <th>STT</th>
             <th>Tên sản phẩm</th>
             <th>Số lượng</th>
             <th>Đơn giá</th>
             <th>Thành tiền</th>
-            <th>Tùy chọn</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
+        @foreach (var gh in listgh)
+        { 
         <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>john</td>
+            <td>@Html.Raw(stt++)</td>
+            <td>@gh.TenSanPham</td>
+            <td>@gh.SoLuong</td>
+            <td>@gh.DonGia</td>
+            <td>@gh.ThanhTien</td>
+            <td><a class="btn btn-danger"  href="/GioHang/XoaGioHang/@gh.Id">Xóa </a></td>
         </tr>
+        }
     </tbody>
 </table>
 <form class="form-horizontal">

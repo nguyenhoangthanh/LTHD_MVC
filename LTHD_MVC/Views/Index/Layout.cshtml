@@ -1,5 +1,7 @@
-﻿@{
+﻿@using LTHD_MVC.Models;
+@{
     ViewBag.Title = "Layout";
+    var listccc = (List<NhaCungCap>)ViewBag.ListNhaCungCap;
 }
 
 <!DOCTYPE html>
@@ -13,7 +15,9 @@
     <link href="~/Content/Css/cerulean-bootstrap.css" rel="stylesheet" />
     <script src="~/Script/jquery.min.js"></script>
     <script src="~/Script/bootstrap.min.js"></script>
-       
+    <script src="~/Script/bootstrap-dialog.min.js"></script>
+
+
     <style>
         .contain {
             width: 100%;
@@ -122,7 +126,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#">
+                        <a class="navbar-brand" href="Index">
                             @*<img src="~/Content/Image/logo_mini.png" style="margin:-20px;"/>*@
                             Trang chủ
                         </a>
@@ -132,96 +136,99 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Danh mục sản phẩm <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="Index/HienThiSPNhaSX/">Apple</a></li>
-                                    <li><a href="#">SamSung</a></li>
-                                    <li><a href="#">Dell</a></li>
-                                    <li><a href="#">Asuz</a></li>
-                                    <li><a href="#">Acer</a></li>
-                                    <li><a href="#">Hp</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="Index/GioiThieu">Giới thiệu</a></li>
-                            <li><a href="Index/BaoHanh">Bảo hành</a></li>
-                            <li><a href="Index/LienHe">Liên hệ</a></li>
-                        </ul>
-                        <form class="navbar-form navbar-right" role="search">
-                            <div class="form-group">
-                                <input placeholder="Nhập nội dung cần tìm..." type="text" name="Timkiem" value="" class="form-control">
-                            </div>
-                            <button class="btn btn-default">Tìm kiếm</button>
-                        </form>
-                    </div><!--/.nav-collapse -->
-                </div><!--/.container-fluid -->
-            </nav>
-        </div>
-        <div class="col-md-12">
-            <div class="col-md-9">
-                @RenderBody()
+                                    @*@foreach (var ncc in listccc)*@
+                                    { 
+                                        <li><a href="/Index/HienThiSPNhaSX/?Id_NCC=2">Apple</a></li>
+                                            <li><a href="/Index/HienThiSPNhaSX/?Id_NCC=2">Dell</a></li>
+                                            <li><a href="/Index/HienThiSPNhaSX/?Id_NCC=10">Asus</a></li>
+                                            <li><a href="/Index/HienThiSPNhaSX/?Id_NCC=6">Acer</a></li>
+                                            <li><a href="/Index/HienThiSPNhaSX/?Id_NCC=1">Hp</a></li>
+                                    }
+                                    </ul>
+                                </li>
+                                <li><a href="/Index/GioiThieu">Giới thiệu</a></li>
+                                <li><a href="/Index/BaoHanh">Bảo hành</a></li>
+                                <li><a href="/Index/LienHe">Liên hệ</a></li>
+                            </ul>
+                            <form class="navbar-form navbar-right" role="search">
+                                <div class="form-group">
+                                    <input placeholder="Nhập nội dung cần tìm..." type="text" name="Timkiem" value="" class="form-control">
+                                </div>
+                                <button class="btn btn-default">Tìm kiếm</button>
+                            </form>
+                        </div><!--/.nav-collapse -->
+                    </div><!--/.container-fluid -->
+                </nav>
             </div>
-            <div class="col-md-3">
-                <div class="sub-box-right">
-                    <p class="sub-box-left">Hỗ trợ trực tuyến</p>
-                    <a href="ymsgr:SendIM?Nguyenthiquynh">
-                        <img border="0" src="http://opi.yahoo.com/online?u=YOUR Yahoo ID&amp;m=g&amp;t=2">
-                    </a>
+            <div class="col-md-12">
+                <div class="col-md-9">
+                    @RenderBody()
                 </div>
-                <div class="sub-box-right">
-                @if (Session["HoTen"] == null && Session["Email"] == null)
-                {
-                    <p class="sub-box-left">Thành viên</p>
-                    <div style="padding:0px 5px">
-                        <form method="post" id="FormDangNhap" action="/Index/DangNhap">
-                            <div class="form-group">
-                                <input name="Email" class="form-control" type="text" id="TenDangNhap" placeholder="Tên Đăng Nhập" value="">
-                            </div>
-                            <div class="form-group">
-                                <input class="form-control" placeholder="Mật khẩu" type="password" id="MatKhau" name="Matkhau" value="">
-                            </div>
-                            <input type="submit" class="btn btn-primary" name="dangnhap" value="Đăng nhập" id="DangNhap">
-                            <a href="/Index/DangKy"><input type="button" class="btn btn-primary" onclick="TruocDangKy()" value="Đăng ký" /></a>
-
-                        </form>
-                    </div>
-                }
-                    else {
+                <div class="col-md-3">
                     <div class="sub-box-right">
-                        <p class="sub-box-left">Xin Chào</p>
-                        <p class="sub-box-left-dangnhap">@Session["HoTen"]</p>
-
-                        <a href="/Index/Thoat"><input type="button" class="btn btn-primary" name=" thoat" value="Thoát" id="Thoat"></a>
+                        <p class="sub-box-left">Hỗ trợ trực tuyến</p>
+                        <a href="ymsgr:SendIM?Nguyenthiquynh">
+                            <img border="0" src="http://opi.yahoo.com/online?u=YOUR Yahoo ID&amp;m=g&amp;t=2">
+                        </a>
                     </div>
-                    }
-                </div>
-                <div class="sub-box-right">
-                    <p class="sub-box-left">Giỏ hàng</p>
-                    <p> Thông tin giỏ hàng</p>
-                    <p> 0 sản phẩm</p>
-                    <img src="~/Content/Image/shoppingcart.png" />
-                </div>
+                    <div class="sub-box-right">
+                        @if (Session["HoTen"] == null && Session["Email"] == null)
+                        {
+                            <p class="sub-box-left">Thành viên</p>
+                            <div style="padding:0px 5px">
+                                <form method="post" id="FormDangNhap" action="/Index/DangNhap">
+                                    <div class="form-group">
+                                        <input name="Email" class="form-control" type="text" id="TenDangNhap" placeholder="Tên Đăng Nhập" value="">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Mật khẩu" type="password" id="MatKhau" name="Matkhau" value="">
+                                    </div>
+                                    <input type="submit" class="btn btn-primary" name="dangnhap" value="Đăng nhập" id="DangNhap">
+                                    <a href="/Index/DangKy"><input type="button" class="btn btn-primary" onclick="TruocDangKy()" value="Đăng ký" /></a>
 
-                @*else
+                                </form>
+                            </div>
+                        }
+                        else
                         {
                             <div class="sub-box-right">
                                 <p class="sub-box-left">Xin Chào</p>
-                                <p class="sub-box-left-dangnhap">@Session["Ten"]</p>
+                                <p class="sub-box-left-dangnhap">@Session["HoTen"]</p>
 
-                                <a href="/Index/Thoat"><input type="button" name=" thoat" value="Thoát" id="Thoat"></a>
+                                <a href="/Index/Thoat"><input type="button" class="btn btn-primary" name=" thoat" value="Thoát" id="Thoat"></a>
                             </div>
                         }
-                    }*@
+                    </div>
+                    <div class="sub-box-right">
+                        <p class="sub-box-left">Giỏ hàng</p>
+                        <p> Thông tin giỏ hàng</p>
+                        <p> 0 sản phẩm</p>
+                        <img src="~/Content/Image/shoppingcart.png" />
+                    </div>
+
+                    @*else
+                            {
+                                <div class="sub-box-right">
+                                    <p class="sub-box-left">Xin Chào</p>
+                                    <p class="sub-box-left-dangnhap">@Session["Ten"]</p>
+
+                                    <a href="/Index/Thoat"><input type="button" name=" thoat" value="Thoát" id="Thoat"></a>
+                                </div>
+                            }
+                        }*@
+                </div>
             </div>
+
+            <footer class="footer">
+                <p>
+                    Thế giới máy tính - Lập trình hiện đại - Nhóm 2<br />
+                    Bản quyền © 2015 thuộc về Trường Đại học Sài Gòn.<br />
+                    Điện thoại: (08) 38.338.975 - 38.352.309
+                </p>
+            </footer>
         </div>
 
-        <footer class="footer">
-            <p>
-                Thế giới máy tính - Lập trình hiện đại - Nhóm 2<br />
-                Bản quyền © 2015 thuộc về Trường Đại học Sài Gòn.<br />
-                Điện thoại: (08) 38.338.975 - 38.352.309
-            </p>
-        </footer>
-    </div>
-
-</body>
+    </body>
 </html>
 <script>
     function HayHay() {
@@ -244,4 +251,4 @@
         });
         return false;
     }
-    </script>
+</script>
