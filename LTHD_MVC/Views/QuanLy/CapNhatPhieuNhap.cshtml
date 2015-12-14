@@ -1,0 +1,80 @@
+﻿@using LTHD_MVC.Models;
+@{
+    ViewBag.Title = "Cập nhật phiếu nhập - Quản lý phiếu nhập - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý phiếu nhập - Cập nhật phiếu nhập";
+    ViewBag.ClassPhieuNhap = "active";
+    Layout = "~/Views/QuanLy/Layout.cshtml";
+    PhieuNhap pn = (PhieuNhap)ViewBag.PhieuNhap;
+    List<SanPham> ListSanPham = (List<SanPham>)ViewBag.ListSanPham;
+}
+<div class="row">
+    <div class="col-xs-12">
+        <form class="form-horizontal" id="FormCapNhat">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="form-field-nhacungcap"> Tên sản phẩm </label>
+                <div class="col-sm-9">
+                    <select class="col-xs-10 col-sm-5" name="sanpham">
+                        @foreach (SanPham sp in ListSanPham)
+                        {
+                            <option value="@sp.Id" @if (@sp.Id == @pn.Id_PhieuNhap) { @Html.Raw("selected=\"selected\"") ; }>@sp.TenSP</option>
+                        }
+                    </select>
+                    <input type="hidden" name="idphieunhap" value="@pn.Id_PhieuNhap" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Ngày nhập </label>
+                <div class="col-sm-9">
+                    <input type="date" name="ngaynhap" class="col-xs-10 col-sm-5" required value="@pn.NgayNhap.ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Số lượng </label>
+                <div class="col-sm-9">
+                    <input type="number" name="soluong" min="1" value="@pn.SoLuong" class="col-xs-4 col-sm-2" required />
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info no-border" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Cập nhật
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#FormCapNhat').submit(function () {
+            $.ajax({
+                url: '/QuanLy/PhieuNhap/XuLyThemPhieuNhap',
+                type: 'POST',
+                data: new FormData(this),
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == 1) {
+                        BootstrapDialog.confirm('Cập nhật thành công, bạn có muốn tiếp tục cập nhật?', function (result) {
+                            if (result) {
+                                $('#FormThemMoi')[0].reset();
+                                $('.remove').click();
+                                $('#tenPhieuNhap').focus();
+                            } else {
+                                location.href = '/QuanLy/PhieuNhap';
+                            }
+                        });
+
+                    }
+                    else {
+                        BootstrapDialog.alert('Có lỗi trong khi cập nhật, vui lòng thử lại!');
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>

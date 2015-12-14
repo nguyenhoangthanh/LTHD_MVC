@@ -169,10 +169,9 @@
                 <ul class="nav ace-nav">
                     <li class="light-blue">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="/assets/avatars/user.jpg" alt="Jason's Photo" />
                             <span class="user-info">
                                 <small>Xin chào,</small>
-                                Mrs. Quỳnh
+                                @Session["Admin_Hoten"]
                             </span>
 
                             <i class="ace-icon fa fa-caret-down"></i>
@@ -287,7 +286,7 @@
                 <li class="@ViewBag.ClassDonDatHang">
                     <a href="/QuanLy/DonDatHang">
                         <i class="menu-icon fa fa-book"></i>
-                        <span class="menu-text">Quản lý đơn đặt hàng</span>
+                        <span class="menu-text">Quản lý đơn hàng</span>
                     </a>
                 </li>
 
