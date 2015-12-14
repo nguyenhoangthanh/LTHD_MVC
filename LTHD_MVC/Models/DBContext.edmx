@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="LTHD_WebLaptopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="LTHD_WebLaptopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CT_DonDH">
           <Key>
             <PropertyRef Name="Id_DonDH" />
@@ -58,7 +58,7 @@
             <PropertyRef Name="Id_PhieuNhap" />
           </Key>
           <Property Name="Id_PhieuNhap" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NgayNhap" Type="date" Nullable="false" />
+          <Property Name="NgayNhap" Type="datetime" Nullable="false" />
           <Property Name="Id_SP" Type="int" Nullable="false" />
           <Property Name="SoLuong" Type="int" Nullable="false" />
         </EntityType>
@@ -186,6 +186,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="ThongKe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IDSanPham" Type="int" Mode="In" />
+          <Parameter Name="Thang" Type="int" Mode="In" />
+          <Parameter Name="Nam" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="LTHD_WebLaptopModelStoreContainer">
           <EntitySet Name="CT_DonDH" EntityType="Self.CT_DonDH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonDH" EntityType="Self.DonDH" Schema="dbo" store:Type="Tables" />
@@ -288,7 +293,7 @@
             <PropertyRef Name="Id_PhieuNhap" />
           </Key>
           <Property Name="Id_PhieuNhap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NgayNhap" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="NgayNhap" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Id_SP" Type="Int32" Nullable="false" />
           <Property Name="SoLuong" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_PhieuNhap_SanPham" FromRole="PhieuNhap" ToRole="SanPham" />
@@ -492,6 +497,11 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="ThongKe" ReturnType="Collection(LTHD_WebLaptopModel.ThongKe_Result)">
+            <Parameter Name="IDSanPham" Mode="In" Type="Int32" />
+            <Parameter Name="Thang" Mode="In" Type="Int32" />
+            <Parameter Name="Nam" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -503,6 +513,13 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ThongKe_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="TenSP" Nullable="false" MaxLength="1024" />
+          <Property Type="Int32" Name="SoLuongNhap" Nullable="true" />
+          <Property Type="Int32" Name="SoLuongXuat" Nullable="true" />
+          <Property Type="String" Name="NgayThang" Nullable="true" MaxLength="11" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -614,6 +631,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ThongKe" FunctionName="LTHD_WebLaptopModel.Store.ThongKe">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LTHD_WebLaptopModel.ThongKe_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TenSP" ColumnName="TenSP" />
+                <ScalarProperty Name="SoLuongNhap" ColumnName="SoLuongNhap" />
+                <ScalarProperty Name="SoLuongXuat" ColumnName="SoLuongXuat" />
+                <ScalarProperty Name="NgayThang" ColumnName="NgayThang" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

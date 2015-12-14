@@ -4,7 +4,7 @@
     ViewBag.BreadCrumb = "Quản lý tồn kho";
     ViewBag.ClassTonKho = "active";
     Layout = "~/Views/QuanLy/Layout.cshtml";
-    List<TonKho> ListTonKho = (List<TonKho>)ViewBag.ListTonKho;
+    List<ThongKe_Result> ListThongKe = (List<ThongKe_Result>)ViewBag.ListThongKe;
     List<SanPham> ListSanPham = (List<SanPham>)ViewBag.ListSanPham;
     int stt = 1;
 }
@@ -31,13 +31,13 @@
                             Từ Ngày
                         </td>
                         <td>
-                            <input name="tungay" type="date" class="form-control" required value="@Session["Thongke_tungay"].ToString()" />
+                            <input name="thang" type="number" min="1" max="12" class="form-control" required value="@Session["Thongke_thang"].ToString()" />
                         </td>
                         <td>
                             Đến Ngày
                         </td>
                         <td>
-                            <input name="denngay" type="date" class="form-control" required value="@Session["Thongke_denngay"].ToString()" />
+                            <input name="nam" type="number" min="2000" max="2050" class="form-control" required value="@Session["Thongke_nam"].ToString()" />
                         </td>
                         <td align="center">
                             <input type="submit" name="thongke" value="Lọc" class="btn btn-primary no-border" />
@@ -53,19 +53,23 @@
                     <tr style="background-color: #5bc0de; color: white; background-image: none;">
                         <th>STT</th>
                         <th>Tên sản phẩm</th>
+                        <th>Số lượng nhập</th>
+                        <th>Số lượng xuất</th>
                         <th>Số lượng tồn</th>
                         <th>Ngày tháng</th>
                     </tr>
                 </thead>
 
                 <tbody id="myTable">
-                    @foreach (TonKho tk in ListTonKho)
+                    @foreach (ThongKe_Result tk in ListThongKe)
                     {
                         <tr>
                             <td class="center">@(stt++)</td>
-                            <td>@ListSanPham.Where(i => i.Id == tk.Id_SP).FirstOrDefault().TenSP</td>
-                            <td>@tk.SoLuongTon</td>
-                            <td>@tk.NgayThang.ToString("dd/MM/yyyy")</td>
+                            <td>@tk.TenSP</td>
+                            <td>@tk.SoLuongNhap</td>
+                            <td>@tk.SoLuongXuat</td>
+                            <td>@(tk.SoLuongNhap - tk.SoLuongXuat)</td>
+                            <td>@tk.NgayThang</td>
                         </tr>
                     }
                 </tbody>

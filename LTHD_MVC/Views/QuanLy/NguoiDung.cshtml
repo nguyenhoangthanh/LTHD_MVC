@@ -5,6 +5,7 @@
     ViewBag.ClassNguoiDung = "active";
     Layout = "~/Views/QuanLy/Layout.cshtml";
     List<NguoiDung> ListNguoiDung = (List<NguoiDung>)ViewBag.ListNguoiDung;
+    NguoiDung UserLogin = (NguoiDung)ViewBag.UserLogin;
     List<Quyen> ListQuyen = (List<Quyen>)ViewBag.ListQuyen;
     int stt = 1;
 }
@@ -43,7 +44,10 @@
                             <td class="center">
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a class="green" title="Chỉnh sửa" href="/QuanLy/NguoiDung/CapNhatNguoiDung/@nd.Id"><i class="ace-icon fa fa-pencil bigger-230"></i></a>
-                                    <a class="red" title="Xóa" href="#" onclick="ConfirmDelete(@nd.Id)"><i class="ace-icon fa fa-trash-o bigger-230"></i></a>
+                                    @if (UserLogin.Id_Quyen == 2 && nd.Email != UserLogin.Email)
+                                    {
+                                     <a class="red" title="Xóa" href="#" onclick="ConfirmDelete(@nd.Id)"><i class="ace-icon fa fa-trash-o bigger-230"></i></a>   
+                                    }
                                 </div>
                             </td>
                         </tr>

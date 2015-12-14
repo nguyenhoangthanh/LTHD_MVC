@@ -365,6 +365,11 @@ namespace LTHD_MVC.Controllers
 
                 List<Quyen> ListQuyen = db.Quyen.ToList();
                 ViewBag.ListQuyen = ListQuyen;
+
+                string admin_email = Session["Admin_Email"].ToString();
+
+                NguoiDung nd = db.NguoiDung.Where(i => i.Email == admin_email).FirstOrDefault();
+                ViewBag.UserLogin = nd;
             }
             return View();
         }
@@ -672,62 +677,50 @@ namespace LTHD_MVC.Controllers
                 return RedirectToAction("DangNhap");
 
             Session["ThongKe_sanpham"] = -1;
-            Session["ThongKe_tungay"] = "";
-            Session["ThongKe_denngay"] = "";
+            Session["ThongKe_thang"] = 1;
+            Session["ThongKe_nam"] = 2015;
 
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
-                List<TonKho> ListTonKho = new List<TonKho>();
+                List<ThongKe_Result> ListThongKe = new List<ThongKe_Result>();
                 List<SanPham> ListSanPham = new List<SanPham>();
-                if (fc["sanpham"] == null && fc["tungay"] == null && fc["denngay"] == null)
-                {
-                    ListTonKho = db.TonKho.ToList();
-                    
-                }
-                else
+                if (fc["sanpham"] != null && fc["thang"] != null && fc["nam"] != null)
                 {
                     int sanpham = int.Parse(fc["sanpham"].ToString());
-                    DateTime tungay = Convert.ToDateTime(fc["tungay"].ToString());
-                    DateTime denngay = Convert.ToDateTime(fc["denngay"].ToString());
+                    int thang = int.Parse(fc["thang"].ToString());
+                    int nam = int.Parse(fc["nam"].ToString());                    
 
                     Session["ThongKe_sanpham"] = sanpham;
-                    Session["ThongKe_tungay"] = tungay.ToString("yyyy-MM-dd");
-                    Session["ThongKe_denngay"] = denngay.ToString("yyyy-MM-dd");
+                    Session["ThongKe_thang"] = thang;
+                    Session["ThongKe_nam"] = nam;
 
-                    if (sanpham == -1)
-                    {
-                        ListTonKho = db.TonKho.Where(i => i.NgayThang >= tungay && i.NgayThang <= denngay).ToList();
-                    }
-                    else
-                    {
-                        ListTonKho = db.TonKho.Where(i => i.Id_SP == sanpham && i.NgayThang >= tungay && i.NgayThang <= denngay).ToList();
-                    }
+                    ListThongKe = db.ThongKe(sanpham, thang, nam).ToList();
 
                     if (fc["thongke"] == "Xuất báo cáo")
                     {
-                        Export(ListTonKho);
+                        Export(ListThongKe);
                     }
-
                 }
-                ViewBag.ListTonKho = ListTonKho;
-                
+                ViewBag.ListThongKe = ListThongKe;
+
                 ListSanPham = db.SanPham.ToList();
                 ViewBag.ListSanPham = ListSanPham;
             }
             return View();
         }
 
-        public void Export(List<TonKho> ListTonKho)
+        public void Export(List<ThongKe_Result> ListThongKe)
         {
             var grid = new System.Web.UI.WebControls.GridView();
 
-            grid.DataSource = from tk in ListTonKho
+            grid.DataSource = from tk in ListThongKe
                               select new
                               {
-                                  IDSanPham = tk.Id_SP,
-                                  TenSanPham = tk.SanPham.TenSP,
-                                  NgayThang = tk.NgayThang.ToString("dd/MM/yyyy"),
-                                  SoLuongTon = tk.SoLuongTon
+                                  IDSanPham = tk.Id,
+                                  TenSanPham = tk.TenSP,
+                                  SoLuongNhap = tk.SoLuongNhap,
+                                  SoLuongXuat = tk.SoLuongXuat,
+                                  NgayThang = tk.NgayThang,
                               };
 
             grid.DataBind();

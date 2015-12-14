@@ -139,5 +139,22 @@ namespace LTHD_MVC.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual ObjectResult<ThongKe_Result> ThongKe(Nullable<int> iDSanPham, Nullable<int> thang, Nullable<int> nam)
+        {
+            var iDSanPhamParameter = iDSanPham.HasValue ?
+                new ObjectParameter("IDSanPham", iDSanPham) :
+                new ObjectParameter("IDSanPham", typeof(int));
+    
+            var thangParameter = thang.HasValue ?
+                new ObjectParameter("Thang", thang) :
+                new ObjectParameter("Thang", typeof(int));
+    
+            var namParameter = nam.HasValue ?
+                new ObjectParameter("Nam", nam) :
+                new ObjectParameter("Nam", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ThongKe_Result>("ThongKe", iDSanPhamParameter, thangParameter, namParameter);
+        }
     }
 }

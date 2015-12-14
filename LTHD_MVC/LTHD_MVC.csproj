@@ -176,6 +176,9 @@
     <Compile Include="Models\sp_helpdiagrams_Result.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ThongKe_Result.cs">
+      <DependentUpon>DBContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TinhTrangDonDH.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
