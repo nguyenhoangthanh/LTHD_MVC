@@ -374,64 +374,6 @@ namespace LTHD_MVC.Controllers
             return View();
         }
 
-        public ActionResult ThemNguoiDung()
-        {
-            if (!KiemTraDangNhap())
-                return RedirectToAction("DangNhap");
-
-            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-            {
-                List<Quyen> ListQuyen = db.Quyen.ToList();
-                ViewBag.ListQuyen = ListQuyen;
-            }
-            return View();
-        }
-
-        public int XuLyThemNguoiDung(FormCollection fc)
-        {
-            if (!KiemTraDangNhap())
-                return -1;
-
-            try
-            {
-                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-                {
-                    // check trùng tên
-                    string tennhacungcap = fc["tennhacungcap"].ToString();
-                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap && i.TrangThai == 1).FirstOrDefault();
-                    if (_ncc == null)
-                    {
-                        _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap && i.TrangThai == 0).FirstOrDefault();
-                        if (_ncc == null)
-                        {
-                            NhaCungCap ncc = new NhaCungCap();
-                            ncc.TenNhaCC = tennhacungcap;
-                            ncc.TrangThai = 1;
-
-                            db.NhaCungCap.Add(ncc);
-                            db.SaveChanges();
-
-                            return 1;
-                        }
-                        else
-                        {
-                            _ncc.TrangThai = 1;
-                            db.SaveChanges();
-                            return 1;
-                        }
-                    }
-                    else
-                    {
-                        return -2;
-                    }
-                }
-            }
-            catch
-            {
-                return -1;
-            }
-        }
-
         public ActionResult CapNhatNguoiDung(int ID)
         {
             if (!KiemTraDangNhap())
@@ -439,9 +381,13 @@ namespace LTHD_MVC.Controllers
 
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
-                NhaCungCap ncc = db.NhaCungCap.Find(ID);
-                ViewBag.NhaCungCap = ncc;
+                NguoiDung nd = db.NguoiDung.Find(ID);
+                ViewBag.NguoiDung = nd;
+
+                List<Quyen> ListQuyen = db.Quyen.ToList();
+                ViewBag.ListQuyen = ListQuyen;
             }
+
             return View();
         }
 
@@ -454,20 +400,18 @@ namespace LTHD_MVC.Controllers
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
                 {
-                    // check trùng tên
-                    string tennhacungcap = fc["tennhacungcap"].ToString();
-                    NhaCungCap _ncc = db.NhaCungCap.Where(i => i.TenNhaCC == tennhacungcap).FirstOrDefault();
-                    if (_ncc == null)
+                    NguoiDung nd = db.NguoiDung.Find(Int32.Parse(fc["idnguoidung"].ToString()));
+                    nd.HoTen = fc["hoten"].ToString();
+                    nd.DiaChi = fc["diachi"].ToString();
+                    nd.DienThoai = fc["dienthoai"].ToString();
+                    nd.MatKhau = fc["matkhau"].ToString() == "" ? nd.MatKhau : fc["matkhau"].ToString();
+                    if (fc["quyen"] != null)
                     {
-                        NhaCungCap ncc = db.NhaCungCap.Find(Int32.Parse(fc["idnhacungcap"].ToString()));
-                        ncc.TenNhaCC = tennhacungcap;
-                        db.SaveChanges();
-                        return 1;
+                        nd.Quyen = db.Quyen.Find(Int32.Parse(fc["quyen"].ToString()));
                     }
-                    else
-                    {
-                        return -2;
-                    }
+
+                    db.SaveChanges();
+                    return 1;
                 }
             }
             catch
@@ -484,8 +428,8 @@ namespace LTHD_MVC.Controllers
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
                 {
-                    NhaCungCap ncc = db.NhaCungCap.Find(id);
-                    ncc.TrangThai = 0;
+                    NguoiDung nd = db.NguoiDung.Find(id);
+                    nd.TrangThai = 0;
                     db.SaveChanges();
                     return 1;
                 }
