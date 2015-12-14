@@ -58,14 +58,8 @@
                 contentType: false,
                 success: function (data) {
                     if (data == 1) {
-                        BootstrapDialog.confirm('Cập nhật thành công, bạn có muốn tiếp tục cập nhật?', function (result) {
-                            if (result) {
-                                $('#FormThemMoi')[0].reset();
-                                $('.remove').click();
-                                $('#tenPhieuNhap').focus();
-                            } else {
+                        BootstrapDialog.alert('Cập nhật thành công!', function () {
                                 location.href = '/QuanLy/PhieuNhap';
-                            }
                         });
 
                     }
