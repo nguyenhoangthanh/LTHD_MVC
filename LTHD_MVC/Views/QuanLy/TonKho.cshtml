@@ -11,10 +11,41 @@
 <div class="row">
     <div class="col-xs-12">
         <div style="margin-bottom:10px;">
-            <a class="btn btn-success no-border" href="/QuanLy/TonKho/ThemTonKho">
-                <i class="ace-icon fa fa-plus bigger-120"></i>
-                Thêm mới
-            </a>
+            <form name="FormThongKe" method="post" action="/QuanLy/TonKho">
+                <table class="table table-bordered" align="center">
+                    <tr>
+                        <td>
+                            Sản phẩm
+                        </td>
+                        <td>
+                            <select class="form-control" name="sanpham">
+                                <option value="-1">Tất cả</option>
+                                @foreach (SanPham sp in ListSanPham)
+                                {
+                                    <option value="@sp.Id" @if (@sp.Id == int.Parse(Session["ThongKe_sanpham"].ToString()))
+                                                           { @Html.Raw("selected=\"selected\"") ; }>@sp.TenSP</option>
+                                }
+                            </select>
+                        </td>
+                        <td>
+                            Từ Ngày
+                        </td>
+                        <td>
+                            <input name="tungay" type="date" class="form-control" required value="@Session["Thongke_tungay"].ToString()" />
+                        </td>
+                        <td>
+                            Đến Ngày
+                        </td>
+                        <td>
+                            <input name="denngay" type="date" class="form-control" required value="@Session["Thongke_denngay"].ToString()" />
+                        </td>
+                        <td align="center">
+                            <input type="submit" name="thongke" value="Lọc" class="btn btn-primary no-border" />
+                            <input type="submit" name="thongke" value="Xuất báo cáo" class="btn btn-success no-border" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
         </div>
         <div class="table-responsive">
             <table class="table table-bordered">
@@ -24,7 +55,6 @@
                         <th>Tên sản phẩm</th>
                         <th>Số lượng tồn</th>
                         <th>Ngày tháng</th>
-                        <th>Công cụ</th>
                     </tr>
                 </thead>
 
@@ -33,16 +63,9 @@
                     {
                         <tr>
                             <td class="center">@(stt++)</td>
-                            <td>@ListSanPham.Where(i=>i.Id == tk.Id_SP).FirstOrDefault().TenSP</td>
+                            <td>@ListSanPham.Where(i => i.Id == tk.Id_SP).FirstOrDefault().TenSP</td>
                             <td>@tk.SoLuongTon</td>
                             <td>@tk.NgayThang.ToString("dd/MM/yyyy")</td>
-                            <td class="center">
-                                <div class="hidden-sm hidden-xs action-buttons">
-                                    <a class="blue" title="Chi tiết" href="/QuanLy/TonKho/ChiTietTonKho/@tk.Id"><i class="ace-icon fa fa-search-plus bigger-230"></i></a>
-                                    <a class="green" title="Chỉnh sửa" href="/QuanLy/TonKho/CapNhatTonKho/@tk.Id"><i class="ace-icon fa fa-pencil bigger-230"></i></a>
-                                    <a class="red" title="Xóa" href="#" onclick="ConfirmDelete(@tk.Id_SP)"><i class="ace-icon fa fa-trash-o bigger-230"></i></a>
-                                </div>
-                            </td>
                         </tr>
                     }
                 </tbody>

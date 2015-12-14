@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace LTHD_MVC.Controllers
 {
@@ -43,7 +44,7 @@ namespace LTHD_MVC.Controllers
             {
                 string email = fc["email"].ToString();
                 string password = fc["password"].ToString();
-                NguoiDung nd = db.NguoiDung.Where(i => i.Email == email && i.MatKhau == password).FirstOrDefault();
+                NguoiDung nd = db.NguoiDung.Where(i => i.Email == email && i.MatKhau == password && i.TrangThai == 1 && i.Id_Quyen > 0).FirstOrDefault();
                 if (nd == null)
                 {
                     return "-1";
@@ -665,117 +666,84 @@ namespace LTHD_MVC.Controllers
         #endregion Đơn đặt hàng
 
         #region Tồn kho
-        public ActionResult TonKho()
+        public ActionResult TonKho(FormCollection fc)
         {
             if (!KiemTraDangNhap())
                 return RedirectToAction("DangNhap");
 
+            Session["ThongKe_sanpham"] = -1;
+            Session["ThongKe_tungay"] = "";
+            Session["ThongKe_denngay"] = "";
+
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
-                List<TonKho> ListTonKho = db.TonKho.ToList();
-                List<SanPham> ListSanPham = db.SanPham.ToList();
+                List<TonKho> ListTonKho = new List<TonKho>();
+                List<SanPham> ListSanPham = new List<SanPham>();
+                if (fc["sanpham"] == null && fc["tungay"] == null && fc["denngay"] == null)
+                {
+                    ListTonKho = db.TonKho.ToList();
+                    
+                }
+                else
+                {
+                    int sanpham = int.Parse(fc["sanpham"].ToString());
+                    DateTime tungay = Convert.ToDateTime(fc["tungay"].ToString());
+                    DateTime denngay = Convert.ToDateTime(fc["denngay"].ToString());
+
+                    Session["ThongKe_sanpham"] = sanpham;
+                    Session["ThongKe_tungay"] = tungay.ToString("yyyy-MM-dd");
+                    Session["ThongKe_denngay"] = denngay.ToString("yyyy-MM-dd");
+
+                    if (sanpham == -1)
+                    {
+                        ListTonKho = db.TonKho.Where(i => i.NgayThang >= tungay && i.NgayThang <= denngay).ToList();
+                    }
+                    else
+                    {
+                        ListTonKho = db.TonKho.Where(i => i.Id_SP == sanpham && i.NgayThang >= tungay && i.NgayThang <= denngay).ToList();
+                    }
+
+                    if (fc["thongke"] == "Xuất báo cáo")
+                    {
+                        Export(ListTonKho);
+                    }
+
+                }
                 ViewBag.ListTonKho = ListTonKho;
+                
+                ListSanPham = db.SanPham.ToList();
                 ViewBag.ListSanPham = ListSanPham;
             }
             return View();
         }
 
-        public ActionResult ThemTonKho()
+        public void Export(List<TonKho> ListTonKho)
         {
-            if (!KiemTraDangNhap())
-                return RedirectToAction("DangNhap");
+            var grid = new System.Web.UI.WebControls.GridView();
 
-            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-            {
-                List<SanPham> ListSanPham = db.SanPham.Where(i => i.TrangThai == 1).ToList();
-                ViewBag.ListSanPham = ListSanPham;
-            }
-            return View();
-        }
+            grid.DataSource = from tk in ListTonKho
+                              select new
+                              {
+                                  IDSanPham = tk.Id_SP,
+                                  TenSanPham = tk.SanPham.TenSP,
+                                  NgayThang = tk.NgayThang.ToString("dd/MM/yyyy"),
+                                  SoLuongTon = tk.SoLuongTon
+                              };
 
-        public int XuLyThemTonKho(FormCollection fc)
-        {
-            if (!KiemTraDangNhap())
-                return -1;
-            try
-            {
-                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-                {
-                    PhieuNhap pn = new PhieuNhap();
-                    pn.NgayNhap = Convert.ToDateTime(fc["ngaynhap"].ToString());
-                    pn.SanPham = db.SanPham.Find(Int32.Parse(fc["sanpham"].ToString()));
-                    pn.SoLuong = int.Parse(fc["soluong"].ToString());
+            grid.DataBind();
 
-                    db.PhieuNhap.Add(pn);
-                    db.SaveChanges();
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment; filename=ThongKe.xls");
+            Response.ContentType = "application/excel";
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
 
-                    return 1;
-                }
-            }
-            catch
-            {
-                return -1;
-            }
-        }
+            grid.RenderControl(htw);
 
-        public ActionResult CapNhatTonKho(int ID)
-        {
-            if (!KiemTraDangNhap())
-                return RedirectToAction("DangNhap");
+            Response.Write(sw.ToString());
 
-            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-            {
-                PhieuNhap pn = db.PhieuNhap.Find(ID);
-                ViewBag.PhieuNhap = pn;
+            Response.End();
 
-                List<SanPham> ListSanPham = db.SanPham.ToList();
-                ViewBag.ListSanPham = ListSanPham;
-            }
-            return View();
-        }
-
-        public int XuLyCapNhatTonKho(FormCollection fc)
-        {
-            if (!KiemTraDangNhap())
-                return -1;
-
-            try
-            {
-                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-                {
-                    PhieuNhap pn = db.PhieuNhap.Find(Int32.Parse(fc["idphieunhap"].ToString()));
-                    pn.SanPham = db.SanPham.Find(Int32.Parse(fc["sanpham"].ToString()));
-                    pn.NgayNhap = Convert.ToDateTime(fc["ngaynhap"].ToString());
-                    pn.SoLuong = Int32.Parse(fc["soluong"].ToString());
-                    db.SaveChanges();
-                    return 1;
-                }
-            }
-            catch
-            {
-                return -1;
-            }
-        }
-
-        public int XuLyXoaTonKho(int id)
-        {
-            if (!KiemTraDangNhap())
-                return -1;
-
-            try
-            {
-                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
-                {
-                    PhieuNhap pn = db.PhieuNhap.Find(id);
-                    db.PhieuNhap.Remove(pn);
-                    db.SaveChanges();
-                    return 1;
-                }
-            }
-            catch
-            {
-                return -1;
-            }
         }
         #endregion Tồn kho
         
