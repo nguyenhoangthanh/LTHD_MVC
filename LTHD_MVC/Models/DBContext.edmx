@@ -58,7 +58,7 @@
             <PropertyRef Name="Id_PhieuNhap" />
           </Key>
           <Property Name="Id_PhieuNhap" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NgayNhap" Type="datetime" Nullable="false" />
+          <Property Name="NgayNhap" Type="date" Nullable="false" />
           <Property Name="Id_SP" Type="int" Nullable="false" />
           <Property Name="SoLuong" Type="int" Nullable="false" />
         </EntityType>
@@ -288,7 +288,7 @@
             <PropertyRef Name="Id_PhieuNhap" />
           </Key>
           <Property Name="Id_PhieuNhap" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NgayNhap" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NgayNhap" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Id_SP" Type="Int32" Nullable="false" />
           <Property Name="SoLuong" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SanPham" Relationship="Self.FK_PhieuNhap_SanPham" FromRole="PhieuNhap" ToRole="SanPham" />
