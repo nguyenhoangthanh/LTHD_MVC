@@ -680,7 +680,7 @@ namespace LTHD_MVC.Controllers
             return View();
         }
 
-        public ActionResult ThemPhieuNhap()
+        public ActionResult ThemTonKho()
         {
             if (!KiemTraDangNhap())
                 return RedirectToAction("DangNhap");
@@ -693,7 +693,7 @@ namespace LTHD_MVC.Controllers
             return View();
         }
 
-        public int XuLyThemPhieuNhap(FormCollection fc)
+        public int XuLyThemTonKho(FormCollection fc)
         {
             if (!KiemTraDangNhap())
                 return -1;
@@ -718,7 +718,7 @@ namespace LTHD_MVC.Controllers
             }
         }
 
-        public ActionResult CapNhatPhieuNhap(int ID)
+        public ActionResult CapNhatTonKho(int ID)
         {
             if (!KiemTraDangNhap())
                 return RedirectToAction("DangNhap");
@@ -734,7 +734,7 @@ namespace LTHD_MVC.Controllers
             return View();
         }
 
-        public int XuLyCapNhatPhieuNhap(FormCollection fc)
+        public int XuLyCapNhatTonKho(FormCollection fc)
         {
             if (!KiemTraDangNhap())
                 return -1;
@@ -757,7 +757,7 @@ namespace LTHD_MVC.Controllers
             }
         }
 
-        public int XuLyXoaPhieuNhap(int id)
+        public int XuLyXoaTonKho(int id)
         {
             if (!KiemTraDangNhap())
                 return -1;
