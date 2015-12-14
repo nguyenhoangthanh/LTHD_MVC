@@ -663,9 +663,121 @@ namespace LTHD_MVC.Controllers
             }
         }
         #endregion Đơn đặt hàng
+
+        #region Tồn kho
         public ActionResult TonKho()
         {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<TonKho> ListTonKho = db.TonKho.ToList();
+                List<SanPham> ListSanPham = db.SanPham.ToList();
+                ViewBag.ListTonKho = ListTonKho;
+                ViewBag.ListSanPham = ListSanPham;
+            }
             return View();
         }
+
+        public ActionResult ThemPhieuNhap()
+        {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                List<SanPham> ListSanPham = db.SanPham.Where(i => i.TrangThai == 1).ToList();
+                ViewBag.ListSanPham = ListSanPham;
+            }
+            return View();
+        }
+
+        public int XuLyThemPhieuNhap(FormCollection fc)
+        {
+            if (!KiemTraDangNhap())
+                return -1;
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    PhieuNhap pn = new PhieuNhap();
+                    pn.NgayNhap = Convert.ToDateTime(fc["ngaynhap"].ToString());
+                    pn.SanPham = db.SanPham.Find(Int32.Parse(fc["sanpham"].ToString()));
+                    pn.SoLuong = int.Parse(fc["soluong"].ToString());
+
+                    db.PhieuNhap.Add(pn);
+                    db.SaveChanges();
+
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public ActionResult CapNhatPhieuNhap(int ID)
+        {
+            if (!KiemTraDangNhap())
+                return RedirectToAction("DangNhap");
+
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                PhieuNhap pn = db.PhieuNhap.Find(ID);
+                ViewBag.PhieuNhap = pn;
+
+                List<SanPham> ListSanPham = db.SanPham.ToList();
+                ViewBag.ListSanPham = ListSanPham;
+            }
+            return View();
+        }
+
+        public int XuLyCapNhatPhieuNhap(FormCollection fc)
+        {
+            if (!KiemTraDangNhap())
+                return -1;
+
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    PhieuNhap pn = db.PhieuNhap.Find(Int32.Parse(fc["idphieunhap"].ToString()));
+                    pn.SanPham = db.SanPham.Find(Int32.Parse(fc["sanpham"].ToString()));
+                    pn.NgayNhap = Convert.ToDateTime(fc["ngaynhap"].ToString());
+                    pn.SoLuong = Int32.Parse(fc["soluong"].ToString());
+                    db.SaveChanges();
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+
+        public int XuLyXoaPhieuNhap(int id)
+        {
+            if (!KiemTraDangNhap())
+                return -1;
+
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    PhieuNhap pn = db.PhieuNhap.Find(id);
+                    db.PhieuNhap.Remove(pn);
+                    db.SaveChanges();
+                    return 1;
+                }
+            }
+            catch
+            {
+                return -1;
+            }
+        }
+        #endregion Tồn kho
+        
     }
 }

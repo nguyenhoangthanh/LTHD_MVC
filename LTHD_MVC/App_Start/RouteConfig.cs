@@ -43,7 +43,13 @@ namespace LTHD_MVC
                name: "DonDatHang",
                url: "QuanLy/DonDatHang/{action}/{id}",
                defaults: new { controller = "QuanLy", action = "DonDatHang", id = UrlParameter.Optional }
-           );
+            );
+
+            routes.MapRoute(
+               name: "TonKho",
+               url: "QuanLy/TonKho/{action}/{id}",
+               defaults: new { controller = "QuanLy", action = "TonKho", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
                 name: "QuanLy",
