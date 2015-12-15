@@ -1,17 +1,103 @@
-﻿
+﻿@using LTHD_MVC.Models;
 @{
-    Layout = null;
+    ViewBag.Title = "Cập nhật người dùng - Quản lý người dùng - Admin Control Panel - Thế giới máy tính";
+    ViewBag.BreadCrumb = "Quản lý người dùng - Cập nhật người dùng";
+    ViewBag.ClassNguoiDung = "active";
+    Layout = "~/Views/QuanLy/Layout.cshtml";
+    List<Quyen> ListQuyen = (List<Quyen>)ViewBag.ListQuyen;
+    NguoiDung nd = (NguoiDung)ViewBag.NguoiDung;
 }
+<div class="row">
+    <div class="col-xs-12">
+        <form class="form-horizontal" id="FormCapNhat">
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Họ tên </label>
+                <div class="col-sm-9">
+                    <input type="text" name="hoten" id="hoten" class="col-xs-10 col-sm-5" required value="@nd.HoTen" />
+                    <input type="hidden" name="idnguoidung" id="idnguoidung" value="@nd.Id" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Email </label>
+                <div class="col-sm-9">
+                    <input type="email" class="col-xs-10 col-sm-5" value="@nd.Email" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Mật khẩu </label>
+                <div class="col-sm-9">
+                    <input type="password" class="col-xs-10 col-sm-5" placeholder="để trống nếu không muốn cập nhật lại mật khẩu" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Địa chỉ </label>
+                <div class="col-sm-9">
+                    <input type="text" name="diachi" value="@nd.DiaChi" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Số điện thoại </label>
+                <div class="col-sm-9">
+                    <input type="number" name="sodienthoai" value="@nd.DienThoai" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right"> Quyền </label>
+                <div class="col-sm-9">
+                    
+                </div>
+            </div>
+            <div class="clearfix form-actions">
+                <div class="col-md-offset-3 col-md-9">
+                    <button class="btn btn-info no-border" type="submit">
+                        <i class="ace-icon fa fa-check bigger-110"></i>
+                        Cập nhật
+                    </button>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>CapNhatNguoiDung</title>
-</head>
-<body>
-    <div> 
+                    &nbsp; &nbsp; &nbsp;
+                    <a href="javascript:history.back();" class="btn no-border" type="button">
+                        <i class="ace-icon fa fa-undo bigger-110"></i>
+                        Quay về
+                    </a>
+                </div>
+            </div>
+        </form>
     </div>
-</body>
-</html>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#hinh').ace_file_input({
+            no_file: 'No File ...',
+            btn_choose: 'Choose',
+            btn_change: 'Change',
+            droppable: false,
+            onchange: null,
+            thumbnail: true,
+            whitelist: 'gif|png|jpg|jpeg',
+            blacklist: 'exe|php'
+        });
+
+        $('#FormThemMoi').submit(function () {
+            $.ajax({
+                url: '/QuanLy/NguoiDung/XuLyCapNhatNguoiDung',
+                type: 'POST',
+                data: new FormData(this),
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == 1) {
+                        BootstrapDialog.alert('Cập nhật thành công', function () {
+                            location.href = '/QuanLy/NguoiDung';
+                        });
+                    }
+                    else {
+                        BootstrapDialog.alert('Có lỗi trong khi cập nhật, vui lòng thử lại!');
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
