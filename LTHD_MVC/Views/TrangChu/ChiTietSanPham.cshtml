@@ -1,0 +1,22 @@
+﻿@using LTHD_MVC.Models;
+@{
+    Layout = "~/Views/TrangChu/Layout.cshtml";
+    SanPham sp = (SanPham)ViewBag.SanPham;
+    ViewBag.Title = "Thông tin sản phẩm "+ sp.TenSP;
+}
+
+<h3 style=" color:red; text-align:center;">Chi tiết sản phẩm</h3>
+
+<div>
+    <img class="col-md-5" src="~/Hinh/MayTinh/sanpham/@sp.HinhAnh" />
+    <ul class="col-md-7">
+        <li>Tên sản phẩm: @sp.TenSP</li>
+        <li style="margin-top: 14px;">Nhà cung cấp: @ViewBag.TenNhaCC</li>
+        <li style="margin-top: 14px;">CPU: @sp.CPU</li>
+        <li style="margin-top: 14px;">HDD: @sp.HDD</li>
+        <li style="margin-top: 14px;">RAM: @sp.RAM</li>
+        <li style="margin-top: 14px;">Bảo hành: @sp.BaoHanh</li>
+        <li style="color:blue; margin-top:14px; font-size:20px;" >Đơn giá: @Html.FormatValue(@sp.DonGia, "{0:#,###,###}")</li>         
+        <li style="list-style-type: none;"><a href="/TrangChu/ThemVaoGioHang/@sp.Id" class="btn btn-primary" style="margin-bottom:15px;">Thêm giỏ</a></li>
+    </ul>
+</div>

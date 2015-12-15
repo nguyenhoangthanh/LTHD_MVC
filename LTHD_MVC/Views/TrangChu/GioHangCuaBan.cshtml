@@ -1,0 +1,118 @@
+﻿@using LTHD_MVC.Models;
+@using LTHD_MVC.Helper;
+@{
+    ViewBag.Title = "Giỏ hàng của bạn";
+    Layout = "~/Views/TrangChu/Layout.cshtml";
+    List<GioHang> ListGioHang = new List<GioHang>();
+    if (Session["listgiohang"] != null)
+    {
+        ListGioHang = (List<GioHang>)Session["listgiohang"];
+    }
+    int stt = 1;
+}
+
+<h2 style="text-align:center;">Giỏ hàng của bạn</h2>
+@if (ListGioHang == null || ListGioHang.Count == 0)
+{
+    <h4 style=" margin-top: 20px; color: #aa1919; font-weight: bold;">Chưa có sản phẩm.</h4>
+}
+else
+{
+    <h4 style=" margin-top: 20px; color: #aa1919; font-weight: bold;">Thông tin sản phẩm đã đặt:</h4>
+    <table class="table table-bordered">
+        <thead style="background:#766d6d; color:white; ">
+            <tr>
+                <th>STT</th>
+                <th>Tên sản phẩm</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GioHang gh in ListGioHang)
+            {
+                <tr>
+                    <td>@Html.Raw(stt++)</td>
+                    <td>@gh.TenSanPham</td>
+                    <td>@gh.SoLuong</td>
+                    <td>@Html.FormatValue(gh.DonGia, "{0:c0}")</td>
+                    <td>@Html.FormatValue(gh.ThanhTien, "{0:c0}")</td>
+                    <td><a class="btn btn-danger" href="/GioHang/XoaGioHang/@gh.Id">Xóa </a></td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">Tổng tiền</td>
+                <td colspan="2">@Html.FormatValue(Session["TongTien"], "{0:c0}")</td>
+            </tr>
+        </tfoot>
+    </table>
+    <form class="form-horizontal" method="post" action="/TrangChu/DonHang">
+        <h4 style=" margin-top: 50px; color: #aa1919; font-weight: bold;">Xác nhận thông tin đơn đặt hàng</h4>
+        @*<div class="form-group">
+            <label for="MaDH" class="col-sm-5 control-label">Mã đơn đặt hàng</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="MaDH">
+            </div>
+            <div class="col-sm-1"></div>
+        </div>*@
+        <div class="form-group">
+            <label for="NgayDat" class="col-sm-5 control-label">Ngày đặt hàng</label>
+            <div class="col-sm-6">
+                <input type="date" class="form-control" id="NgayDat" name="NgayDat" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group">
+            <label for="NgayGiao" class="col-sm-5 control-label">Ngày giao hàng</label>
+            <div class="col-sm-6">
+                <input type="date" class="form-control" id="NgayGiao" name="NgayGiao" value="@DateTime.Now.AddDays(3).ToString("yyyy-MM-dd")" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group">
+            <label for="GhiChu" class="col-sm-5 control-label">Ghi chú</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="GhiChu" name="GhiChu" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+
+
+        <h4 style=" margin-top: 50px; color: #aa1919; font-weight: bold;">Xác nhận thông tin khách hàng</h4>
+        <div class="form-group">
+            <label for="HoTen" class="col-sm-5 control-label">Họ tên khách hàng</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="HoTen" name="HoTen" value="@Session["HoTen"]" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group">
+            <label for="DiaChi" class="col-sm-5 control-label">Địa chỉ khách hàng</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="DiaChi" name="DiaChi" value="@Session["DiaChi"]" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group">
+            <label for="Email" class="col-sm-5 control-label">Email khách hàng</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="Email" name="Email" value="@Session["Email"]" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group">
+            <label for="SoDienThoai" class="col-sm-5 control-label">Số điện thoại</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="DienThoai" name="DienThoai" value="@Session["DienThoai"]" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group" style="text-align:center">
+            <button type="submit" class="btn btn-primary">Xác nhận đặt hàng</button>
+        </div>
+</form>
+}
