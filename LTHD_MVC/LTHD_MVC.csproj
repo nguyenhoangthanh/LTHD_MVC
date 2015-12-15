@@ -460,6 +460,8 @@
     <Content Include="Views\TrangChu\Index.cshtml" />
     <Content Include="Views\TrangChu\Layout.cshtml" />
     <Content Include="Views\TrangChu\LienHe.cshtml" />
+    <Content Include="Views\TrangChu\ThongTinCaNhan.cshtml" />
+    <Content Include="Views\TrangChu\DoiMatKhau.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

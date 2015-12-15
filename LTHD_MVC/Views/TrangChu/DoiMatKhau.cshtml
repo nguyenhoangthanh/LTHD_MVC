@@ -1,0 +1,10 @@
+﻿@using LTHD_MVC.Models;
+@{
+    Layout = "~/Views/TrangChu/Layout.cshtml";
+    ViewBag.Title = "Thế giới máy tính";
+    List<SanPham> ListSanPham = (List<SanPham>)ViewBag.ListSanPham;
+}
+
+<form method="post" action="/TrangChu/DoiMatKhau">
+    Mật khẩu cũ: <input type="password" name="password" class="form-control" />
+</form>

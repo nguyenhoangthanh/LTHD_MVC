@@ -290,6 +290,18 @@ namespace LTHD_MVC.Controllers
             Layout();
             return View();
         }
+
+        public ActionResult ThongTinCaNhan()
+        {
+            Layout();
+            return View();
+        }
+
+        public ActionResult DoiMatKhau()
+        {
+            Layout();
+            return View();
+        }
     }
 
 }
