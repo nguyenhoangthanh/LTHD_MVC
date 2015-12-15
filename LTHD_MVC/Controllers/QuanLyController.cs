@@ -78,7 +78,7 @@ namespace LTHD_MVC.Controllers
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<SanPham> ListSanPham = db.SanPham.Where(i => i.TrangThai == 1).ToList();
-                List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.ToList();
+                List<NhaCungCap> ListNhaCungCap = db.NhaCungCap.Where(a => a.TrangThai == 1) .ToList();
                 ViewBag.ListSanPham = ListSanPham;
                 ViewBag.ListNhaCungCap = ListNhaCungCap;
             }
