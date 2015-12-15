@@ -664,6 +664,7 @@ namespace LTHD_MVC.Controllers
                                   TenSanPham = tk.TenSP,
                                   SoLuongNhap = tk.SoLuongNhap,
                                   SoLuongXuat = tk.SoLuongXuat,
+                                  SoluongTon = tk.SoLuongNhap - tk.SoLuongXuat,
                                   NgayThang = tk.ThangNam,
                               };
 
