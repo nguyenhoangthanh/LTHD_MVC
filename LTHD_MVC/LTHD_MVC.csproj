@@ -128,6 +128,7 @@
   <ItemGroup>
     <Compile Include="Controllers\QuanLyController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\TrangChuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -447,6 +448,18 @@
     <Content Include="Views\QuanLy\ChiTietDonDatHang.cshtml" />
     <Content Include="Views\QuanLy\CapNhatNguoiDung.cshtml" />
     <Content Include="Views\Index\TimKiem.cshtml" />
+    <Content Include="Views\TrangChu\BaoHanh.cshtml" />
+    <Content Include="Views\TrangChu\ChiTietSanPham.cshtml" />
+    <Content Include="Views\TrangChu\Dangky.cshtml" />
+    <Content Include="Views\TrangChu\DangKyThanhCong.cshtml" />
+    <Content Include="Views\TrangChu\DonHang.cshtml" />
+    <Content Include="Views\TrangChu\GioHang.cshtml" />
+    <Content Include="Views\TrangChu\GioHangCuaBan.cshtml" />
+    <Content Include="Views\TrangChu\GioiThieu.cshtml" />
+    <Content Include="Views\TrangChu\HienThiSPNhaSX.cshtml" />
+    <Content Include="Views\TrangChu\Index.cshtml" />
+    <Content Include="Views\TrangChu\Layout.cshtml" />
+    <Content Include="Views\TrangChu\LienHe.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

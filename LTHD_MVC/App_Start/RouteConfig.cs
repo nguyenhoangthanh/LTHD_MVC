@@ -65,28 +65,34 @@ namespace LTHD_MVC
 
             // End Quan Ly
 
+
+            // Start Trang Chu
+
+            routes.MapRoute(
+               name: "TrangChu_NhaCungCap",
+               url: "TrangChu/NhaCungCap/{name}/{id}",
+               defaults: new { controller = "TrangChu", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "TrangChu_DangNhap",
+                url: "TrangChu/DangNhap/{action}/{id}",
+                defaults: new { controller = "TrangChu", action = "DangNhap", id = UrlParameter.Optional }
+            );
+
             routes.MapRoute(
                name: "GioHang",
                url: "GioHang/XoaGioHang/{id}",
-               defaults: new { controller = "Index", action = "XoaGioHang", id = UrlParameter.Optional }
-           );
+               defaults: new { controller = "TrangChu", action = "XoaGioHang", id = UrlParameter.Optional }
+            );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Index", action = "Index", id = UrlParameter.Optional }
+               name: "TrangChu",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "TrangChu", action = "Index", id = UrlParameter.Optional }
             );
-            routes.MapRoute(
-               name: "Dang nhap",
-               url: "dangnhap",
-               defaults: new { controller = "Index", action = "DangNhap", id = UrlParameter.Optional }
-           );
-            //routes.MapRoute(
-            //name: "DangKi",
-            //url: "dang-ki",
-            //defaults: new { Controller = "Index", Action = "Dangki", ia = UrlParameter.Optional},
-            //    namespace: new[] {"LTHD_MVC.Controller"}
-            //);
+            
+            //End Trang Chu
         }
     }
 }
