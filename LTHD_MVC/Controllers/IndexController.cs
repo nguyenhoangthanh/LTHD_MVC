@@ -130,7 +130,7 @@ namespace LTHD_MVC.Controllers
                 {
                     NguoiDung user = new NguoiDung();
                     user.HoTen = fc["HoTen"].ToString();
-                    user.MatKhau = fc["MatKhau"].ToString();
+                    user.MatKhau = hp.md5(fc["MatKhau"].ToString(), 16);
                     user.DiaChi = fc["DiaChi"].ToString();
                     user.DienThoai = fc["DienThoai"].ToString();
                     user.Email = fc["Email"].ToString();
@@ -155,7 +155,7 @@ namespace LTHD_MVC.Controllers
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 string email = fc["Email"].ToString();
-                string matkhau = fc["MatKhau"].ToString();
+                string matkhau = hp.md5(fc["MatKhau"].ToString(), 16);
                 NguoiDung nd = db.NguoiDung.Where(i => i.Email == email && i.MatKhau == matkhau).FirstOrDefault();
                 if (nd == null)
                 {
@@ -192,6 +192,18 @@ namespace LTHD_MVC.Controllers
         public ActionResult GioiThieu()
         {
             return View();
+        }
+
+        public ActionResult TimKiem(FormCollection fc)
+        {
+            using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+            {
+                string tukhoa = fc["Timkiem"].ToString();
+                List<SanPham> ListKQTK = db.SanPham.Where(n => n.TenSP.Contains(tukhoa)).ToList();
+                ViewBag.ThongBao = "Tìm thấy " + ListKQTK.Count + " sản phẩm có từ khóa là: " + tukhoa;
+                ViewBag.ListKQTK = ListKQTK;
+                return View();
+            }
         }
     }
 

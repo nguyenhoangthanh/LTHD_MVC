@@ -48,17 +48,16 @@ namespace LTHD_MVC.Helper
         //            return sb.ToString();
         //        }
 
-        //        public string md5(string str, int code)
-        //        {
-        //            if (code == 16)
-        //            {
-        //                return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5").ToLower().Substring(8, 16);
-        //            }
-        //            else
-        //            {
-        //                return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5").ToLower();
-        //            }
-        //        }
-        //    }
+        public string md5(string str, int code)
+        {
+            if (code == 16)
+            {
+                return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5").ToLower().Substring(8, 16);
+            }
+            else
+            {
+                return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(str, "MD5").ToLower();
+            }
+        }
     }
 }

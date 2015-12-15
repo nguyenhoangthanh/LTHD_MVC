@@ -446,6 +446,7 @@
     <Content Include="Views\QuanLy\CapNhatPhieuNhap.cshtml" />
     <Content Include="Views\QuanLy\ChiTietDonDatHang.cshtml" />
     <Content Include="Views\QuanLy\CapNhatNguoiDung.cshtml" />
+    <Content Include="Views\Index\TimKiem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

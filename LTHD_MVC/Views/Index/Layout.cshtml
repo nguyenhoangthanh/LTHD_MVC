@@ -150,12 +150,13 @@
                                 <li><a href="/Index/BaoHanh">Bảo hành</a></li>
                                 <li><a href="/Index/LienHe">Liên hệ</a></li>
                             </ul>
-                            <form class="navbar-form navbar-right" role="search">
-                                <div class="form-group">
-                                    <input placeholder="Nhập nội dung cần tìm..." type="text" name="Timkiem" value="" class="form-control">
-                                </div>
-                                <button class="btn btn-default">Tìm kiếm</button>
-                            </form>
+                        @using (Html.BeginForm("TimKiem", "Index"))
+                        {
+                            <div class="navbar-form navbar-right" role="search">
+                                <input placeholder="Nhập nội dung cần tìm..." type="text" name="Timkiem" value="" class="form-control">
+                                <button class="btn btn-default" type="submit">Tìm kiếm</button>
+                            </div>
+                        }
                         </div><!--/.nav-collapse -->
                     </div><!--/.container-fluid -->
                 </nav>

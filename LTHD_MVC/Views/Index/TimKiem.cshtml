@@ -1,0 +1,21 @@
+﻿@model IEnumerable<LTHD_MVC.Models.SanPham>
+@using LTHD_MVC.Models;
+
+@{
+    ViewBag.Title = "Kết quả tìm kiếm";
+    Layout = "~/Views/Index/Layout.cshtml";
+    List<SanPham> ListKQTK = (List<SanPham>)ViewBag.ListKQTK;
+
+}
+
+<h3 style=" color:red; text-align:center;">@ViewBag.ThongBao</h3>
+
+@foreach (var sp in ListKQTK)
+{
+    <div class="col-md-3" style="border-radius: 10px; border: 1px solid;  margin: 20px">
+        <p style="color:red; font-weight:bold; text-align:center; font-size:20px;">@sp.TenSP</p>
+        <div style="margin-top:20px; text-align:center;"><img src="~/Hinh/MayTinh/sanpham/@sp.HinhAnh" width="120" height="120" /></div>
+        <p style="color:red; font-weight:bold; text-align:center;"> Giá: @sp.DonGia VND</p>
+        <a href="/Index/ChiTietSanPham/@sp.Id"><input type="button" class="btn btn-primary" style="margin-bottom:15px;" value="Chi tiết" /></a>
+        <a href="/Index/ThemVaoGioHang/@sp.Id"><input type="button" class="btn btn-primary" style="margin-bottom:15px;" value="Chọn mua" /></a>
+    </div>
