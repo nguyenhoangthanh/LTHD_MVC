@@ -621,24 +621,24 @@ namespace LTHD_MVC.Controllers
                 return RedirectToAction("DangNhap");
 
             Session["ThongKe_sanpham"] = -1;
-            Session["ThongKe_thang"] = 1;
-            Session["ThongKe_nam"] = 2015;
+            Session["ThongKe_tungay"] = "";
+            Session["ThongKe_denngay"] = "";
 
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<ThongKe_Result> ListThongKe = new List<ThongKe_Result>();
                 List<SanPham> ListSanPham = new List<SanPham>();
-                if (fc["sanpham"] != null && fc["thang"] != null && fc["nam"] != null)
+                if (fc["sanpham"] != null && fc["tungay"] != null && fc["denngay"] != null)
                 {
                     int sanpham = int.Parse(fc["sanpham"].ToString());
-                    int thang = int.Parse(fc["thang"].ToString());
-                    int nam = int.Parse(fc["nam"].ToString());                    
+                    DateTime tungay = Convert.ToDateTime(fc["tungay"].ToString());
+                    DateTime denngay = Convert.ToDateTime(fc["denngay"].ToString());
 
                     Session["ThongKe_sanpham"] = sanpham;
-                    Session["ThongKe_thang"] = thang;
-                    Session["ThongKe_nam"] = nam;
+                    Session["ThongKe_tungay"] = tungay.ToString("yyyy-MM");
+                    Session["ThongKe_denngay"] = denngay.ToString("yyyy-MM");
 
-                    ListThongKe = db.ThongKe(sanpham, thang, nam).ToList();
+                    ListThongKe = db.ThongKe(sanpham, tungay, denngay).ToList();
 
                     if (fc["thongke"] == "Xuất báo cáo")
                     {
@@ -660,11 +660,11 @@ namespace LTHD_MVC.Controllers
             grid.DataSource = from tk in ListThongKe
                               select new
                               {
-                                  IDSanPham = tk.Id,
+                                  IDSanPham = tk.Id_SP,
                                   TenSanPham = tk.TenSP,
                                   SoLuongNhap = tk.SoLuongNhap,
                                   SoLuongXuat = tk.SoLuongXuat,
-                                  NgayThang = tk.NgayThang,
+                                  NgayThang = tk.ThangNam,
                               };
 
             grid.DataBind();

@@ -13,10 +13,10 @@ namespace LTHD_MVC.Models
     
     public partial class ThongKe_Result
     {
-        public int Id { get; set; }
-        public string TenSP { get; set; }
+        public int Id_SP { get; set; }
         public Nullable<int> SoLuongNhap { get; set; }
         public Nullable<int> SoLuongXuat { get; set; }
-        public string NgayThang { get; set; }
+        public string ThangNam { get; set; }
+        public string TenSP { get; set; }
     }
 }

@@ -140,21 +140,21 @@ namespace LTHD_MVC.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
-        public virtual ObjectResult<ThongKe_Result> ThongKe(Nullable<int> iDSanPham, Nullable<int> thang, Nullable<int> nam)
+        public virtual ObjectResult<ThongKe_Result> ThongKe(Nullable<int> id_SP, Nullable<System.DateTime> tuNgay, Nullable<System.DateTime> denNgay)
         {
-            var iDSanPhamParameter = iDSanPham.HasValue ?
-                new ObjectParameter("IDSanPham", iDSanPham) :
-                new ObjectParameter("IDSanPham", typeof(int));
+            var id_SPParameter = id_SP.HasValue ?
+                new ObjectParameter("Id_SP", id_SP) :
+                new ObjectParameter("Id_SP", typeof(int));
     
-            var thangParameter = thang.HasValue ?
-                new ObjectParameter("Thang", thang) :
-                new ObjectParameter("Thang", typeof(int));
+            var tuNgayParameter = tuNgay.HasValue ?
+                new ObjectParameter("TuNgay", tuNgay) :
+                new ObjectParameter("TuNgay", typeof(System.DateTime));
     
-            var namParameter = nam.HasValue ?
-                new ObjectParameter("Nam", nam) :
-                new ObjectParameter("Nam", typeof(int));
+            var denNgayParameter = denNgay.HasValue ?
+                new ObjectParameter("DenNgay", denNgay) :
+                new ObjectParameter("DenNgay", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ThongKe_Result>("ThongKe", iDSanPhamParameter, thangParameter, namParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ThongKe_Result>("ThongKe", id_SPParameter, tuNgayParameter, denNgayParameter);
         }
     }
 }

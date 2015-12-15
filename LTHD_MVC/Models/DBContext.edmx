@@ -187,9 +187,9 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="ThongKe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IDSanPham" Type="int" Mode="In" />
-          <Parameter Name="Thang" Type="int" Mode="In" />
-          <Parameter Name="Nam" Type="int" Mode="In" />
+          <Parameter Name="Id_SP" Type="int" Mode="In" />
+          <Parameter Name="TuNgay" Type="date" Mode="In" />
+          <Parameter Name="DenNgay" Type="date" Mode="In" />
         </Function>
         <EntityContainer Name="LTHD_WebLaptopModelStoreContainer">
           <EntitySet Name="CT_DonDH" EntityType="Self.CT_DonDH" Schema="dbo" store:Type="Tables" />
@@ -498,9 +498,9 @@
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="ThongKe" ReturnType="Collection(LTHD_WebLaptopModel.ThongKe_Result)">
-            <Parameter Name="IDSanPham" Mode="In" Type="Int32" />
-            <Parameter Name="Thang" Mode="In" Type="Int32" />
-            <Parameter Name="Nam" Mode="In" Type="Int32" />
+            <Parameter Name="Id_SP" Mode="In" Type="Int32" />
+            <Parameter Name="TuNgay" Mode="In" Type="DateTime" />
+            <Parameter Name="DenNgay" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -515,11 +515,11 @@
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="ThongKe_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="TenSP" Nullable="false" MaxLength="1024" />
+          <Property Type="Int32" Name="Id_SP" Nullable="false" />
           <Property Type="Int32" Name="SoLuongNhap" Nullable="true" />
           <Property Type="Int32" Name="SoLuongXuat" Nullable="true" />
-          <Property Type="String" Name="NgayThang" Nullable="true" MaxLength="11" />
+          <Property Type="String" Name="ThangNam" Nullable="true" MaxLength="101" />
+          <Property Type="String" Name="TenSP" Nullable="false" MaxLength="1024" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -634,11 +634,11 @@
           <FunctionImportMapping FunctionImportName="ThongKe" FunctionName="LTHD_WebLaptopModel.Store.ThongKe">
             <ResultMapping>
               <ComplexTypeMapping TypeName="LTHD_WebLaptopModel.ThongKe_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TenSP" ColumnName="TenSP" />
+                <ScalarProperty Name="Id_SP" ColumnName="Id_SP" />
                 <ScalarProperty Name="SoLuongNhap" ColumnName="SoLuongNhap" />
                 <ScalarProperty Name="SoLuongXuat" ColumnName="SoLuongXuat" />
-                <ScalarProperty Name="NgayThang" ColumnName="NgayThang" />
+                <ScalarProperty Name="ThangNam" ColumnName="ThangNam" />
+                <ScalarProperty Name="TenSP" ColumnName="TenSP" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
