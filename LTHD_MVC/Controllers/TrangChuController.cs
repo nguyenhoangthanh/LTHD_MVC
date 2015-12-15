@@ -8,6 +8,8 @@ using System.Web.Security;
 using LTHD_MVC.SessionCode;
 using System.Data.Entity;
 using LTHD_MVC.Helper;
+using PagedList;
+
 namespace LTHD_MVC.Controllers
 {
     public class TrangChuController : Controller
@@ -23,13 +25,16 @@ namespace LTHD_MVC.Controllers
         }
         #endregion Layout
 
-        public ActionResult Index(int id = 0)
+        public ActionResult Index(int id = 0, int? page = 1)
         {
             Layout();
             using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
             {
                 List<SanPham> ListSanPham = db.SanPham.Where(p => (p.Id_NCC == id || id == 0) && p.TrangThai == 1).ToList();
-                ViewBag.ListSanPham = ListSanPham.ToList();
+                var pageNumber = page ?? 1;
+                var onePageOfProducts = ListSanPham.ToPagedList(pageNumber, 6);
+
+                ViewBag.ListSanPham = onePageOfProducts;
             }
             return View();
         }
