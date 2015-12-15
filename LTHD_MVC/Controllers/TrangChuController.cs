@@ -303,11 +303,41 @@ namespace LTHD_MVC.Controllers
             Layout();
             return View();
         }
-
         public ActionResult DoiMatKhau()
         {
             Layout();
             return View();
+        }
+
+        public int XuLyDoiMatKhau(FormCollection fc)
+        {
+            try
+            {
+                using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
+                {
+                    NguoiDung user = db.NguoiDung.Find(int.Parse(Session["Id"].ToString()));
+
+                    if (user.MatKhau == fc["MatKhauCu"].ToString())
+                    {
+                        user.MatKhau = fc["MatKhauMoi"].ToString();
+                        db.SaveChanges();
+                        Session["Id"] = null;
+                        Session["HoTen"] = null;
+                        Session["Email"] = null;
+                        Session["DiaChi"] = null;
+                        Session["DienThoai"] = null;
+                        return 1;
+                    }
+                    else
+                    {
+                        return -2;
+                    }                    
+                }
+            }
+            catch
+            {
+                return -1;
+            }
         }
     }
 

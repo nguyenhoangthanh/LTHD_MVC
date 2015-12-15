@@ -1,10 +1,67 @@
 ﻿@using LTHD_MVC.Models;
 @{
+    ViewBag.Title = "Đổi mật khẩu";
     Layout = "~/Views/TrangChu/Layout.cshtml";
-    ViewBag.Title = "Thế giới máy tính";
-    List<SanPham> ListSanPham = (List<SanPham>)ViewBag.ListSanPham;
 }
 
-<form method="post" action="/TrangChu/DoiMatKhau">
-    Mật khẩu cũ: <input type="password" name="password" class="form-control" />
-</form>
+<h2 style="text-align:center;">Đổi mật khẩu</h2>
+    <form class="form-horizontal" id="FormDoiMatKhau">
+        <div class="form-group">
+            <label for="NgayDat" class="col-sm-5 control-label">Mật khẩu cũ</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" id="MatKhauCu" name="MatKhauCu" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group">
+            <label for="NgayDat" class="col-sm-5 control-label">Mật khẩu mới</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" id="MatKhauMoi" name="MatKhauMoi" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group">
+            <label for="NgayDat" class="col-sm-5 control-label">Nhập lại mật khẩu mới</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" id="NhapLaiMatKhauMoi" name="NhapLaiMatKhauMoi" required>
+            </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="form-group" style="text-align:center">
+            <button type="submit" class="btn btn-primary">Thay đổi</button>
+        </div>
+    </form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#FormDoiMatKhau').submit(function () {
+
+            if ($("#MatKhauMoi").val() != $("#NhapLaiMatKhauMoi").val()) {
+                BootstrapDialog.alert('Mật khẩu không trùng khớp!');
+                return false;
+            }
+
+            $.ajax({
+                url: '/TrangChu/XuLyDoiMatKhau',
+                type: 'POST',
+                data: new FormData(this),
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == -1) {
+                        BootstrapDialog.alert('Có lỗi trong khi đổi mật khẩu, vui lòng thử lại!');
+                    }
+                    else if (data == 1) {
+                        BootstrapDialog.alert('Đổi mật khẩu thành công, vui lòng đăng nhập lại!', function () {
+                            location.href = '/';
+                        });
+                    }
+                    else {
+                        BootstrapDialog.alert('Mật khẩu cũ không đúng!');
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
