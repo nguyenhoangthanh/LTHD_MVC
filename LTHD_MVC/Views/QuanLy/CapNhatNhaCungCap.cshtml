@@ -11,8 +11,8 @@
         <form class="form-horizontal" id="FormThemMoi">
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Tên nhà cung cấp </label>
-                <div class="col-sm-9">
-                    <input type="text" name="tennhacungcap" id="tennhacungcap" class="col-xs-10 col-sm-5" required value="@ncc.TenNhaCC" />
+                <div class="col-sm-3">
+                    <input type="text" name="tennhacungcap" id="tennhacungcap" class="form-control" required value="@ncc.TenNhaCC" />
                     <input type="hidden" name="idnhacungcap" id="idnhacungcap" value="@ncc.Id" />
                 </div>
             </div>
@@ -24,7 +24,7 @@
                     </button>
 
                     &nbsp; &nbsp; &nbsp;
-                    <a href="javascript:history.back();" class="btn no-border" type="button">
+                    <a href="/QuanLy/NhaCungCap" class="btn no-border" type="button">
                         <i class="ace-icon fa fa-undo bigger-110"></i>
                         Quay về
                     </a>

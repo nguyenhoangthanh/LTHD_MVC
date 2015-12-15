@@ -98,10 +98,10 @@
     function UpdateStatus(madonhang, tenkhachhang) {
         BootstrapDialog.alert({
             title: 'Cập nhật tình trạng đơn đặt hàng',
-            message: '<table class="table table-bordered" style="text-alight:left !important">' +
-                '<tr><th>Mã đơn hàng</th><td>MDH ' + madonhang + '</td></tr>' +
-                '<tr><th>Tên khách hàng</th><td>' + tenkhachhang + '</td></tr>' +
-                '<tr><th>Tình trạng</th><td>' +
+            message: '<table class="table table-bordered" align="center">' +
+                '<tr><td>Mã đơn hàng</td><td>MDH ' + madonhang + '</td></tr>' +
+                '<tr><td>Tên khách hàng</td><td>' + tenkhachhang + '</td></tr>' +
+                '<tr><td>Tình trạng</td><td>' +
                 '<select id="tinhtrang" class="form-control">' +
                 '@foreach(TinhTrangDonDH tt in ListTinhTrangDonDH){ <option value = "@tt.Id">@tt.TinhTrang</option> }'
                 +'</select>'
@@ -111,7 +111,6 @@
             closable: true,
             draggable: true,
             buttonLabel: 'Cập nhật',
-            btnOKClass: 'btn-warning',
             callback: function (result) {
                 if (result) {
                     $.ajax({

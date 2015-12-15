@@ -12,69 +12,77 @@
         <form class="form-horizontal" id="FormThemMoi">
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Tên sản phẩm </label>
-                <div class="col-sm-9">
-                    <input type="text" name="tensanpham" id="tensanpham" class="col-xs-10 col-sm-5" required value="@sp.TenSP" />
+                <div class="col-sm-4">
+                    <input type="text" name="tensanpham" id="tensanpham" class="form-control" required value="@sp.TenSP" />
                     <input type="hidden" name="idsanpham" id="idsanpham" value="@sp.Id" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-nhacungcap"> Nhà cung cấp </label>
-                <div class="col-sm-9">
-                    <select class="col-xs-10 col-sm-5" name="nhacungcap">
+                <div class="col-sm-4">
+                    <select class="form-control" name="nhacungcap">
                         @foreach (NhaCungCap ncc in ListNhaCungCap)
                         {
-                            <option value="@ncc.Id" @if (@ncc.Id == @sp.Id_NCC) { @Html.Raw("selected=\"selected\"") ; }>@ncc.TenNhaCC</option>
+                            <option value="@ncc.Id" @if (@ncc.Id == @sp.Id_NCC) { @Html.Raw("selected=\"selected\"")  ; }>@ncc.TenNhaCC</option>
                         }
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> HDD </label>
-                <div class="col-sm-9">
-                    <input type="number" name="hdd" min="1" value="@sp.HDD" class="col-xs-2 col-sm-1" required />
-                    <label class="control-label no-padding-right" style="margin-left: 10px;"> GB </label>
+                <div class="col-sm-1">
+                    <input type="number" name="hdd" min="1" value="@sp.HDD" class="form-control" required />
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label" style="margin-left:-20px;">GB</label>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> RAM </label>
-                <div class="col-sm-9">
-                    <input type="number" name="ram" min="1" value="@sp.RAM" class="col-xs-2 col-sm-1" required />
-                    <label class="control-label no-padding-right" style="margin-left: 10px;"> GB </label>
+                <div class="col-sm-1">
+                    <input type="number" name="ram" min="1" value="@sp.RAM" class="form-control" required />
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label" style="margin-left:-20px;">GB</label>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> CPU </label>
-                <div class="col-sm-9">
-                    <input type="text" name="cpu" class="col-xs-10 col-sm-5" required value="@sp.CPU" />
+                <div class="col-sm-4">
+                    <input type="text" name="cpu" class="form-control" required value="@sp.CPU" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Đơn giá </label>
-                <div class="col-sm-9">
-                    <input type="number" name="dongia" min="1" value="@sp.DonGia" class="col-xs-4 col-sm-2" required />
-                    <label class="control-label no-padding-right" style="margin-left: 10px;"> VNĐ </label>
+                <div class="col-sm-2">
+                    <input type="number" name="dongia" min="1" value="@sp.DonGia" class="form-control" required />
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label" style="margin-left:-20px;">VNĐ</label>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Hình ảnh </label>
                 <div class="col-sm-4">
-                    <img src="/Hinh/MayTinh/sanpham/@sp.HinhAnh" />
-                    <input type="file" name="hinh" id="hinh" class="col-xs-4 col-sm-2" />
+                    <img src="/Hinh/MayTinh/sanpham/@sp.HinhAnh" class="img-responsive img-rounded" />
+                    <input type="file" name="hinh" id="hinh" class="form-control" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Bảo hành </label>
-                <div class="col-sm-9">
-                    <input type="number" name="baohanh" min="1" max="36" value="@sp.BaoHanh.Replace(" tháng","")" class="col-xs-4 col-sm-2" required />
-                    <label class="control-label no-padding-right" style="margin-left: 10px;"> Tháng </label>
+                <div class="col-sm-1">
+                    <input type="number" name="baohanh" min="1" max="36" value="@sp.BaoHanh.Replace(" tháng","")" class="form-control" required />
+                </div>
+                <div class="col-sm-1">
+                    <label class="control-label" style="margin-left:-20px;">Tháng</label>
                 </div>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Số lượng </label>
-                <div class="col-sm-9">
-                    <input type="number" name="soluong" min="1" value="@sp.SoLuong" class="col-xs-4 col-sm-2" required />
+                <div class="col-sm-1">
+                    <input type="number" name="soluong" min="1" value="@sp.SoLuong" class="form-control" required />
                 </div>
-            </div>
+            </div>*@
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info no-border" type="submit">
@@ -83,7 +91,7 @@
                     </button>
 
                     &nbsp; &nbsp; &nbsp;
-                    <a href="javascript:history.back();" class="btn no-border" type="button">
+                    <a href="/QuanLy/SanPham" class="btn no-border" type="button">
                         <i class="ace-icon fa fa-undo bigger-110"></i>
                         Quay về
                     </a>

@@ -11,8 +11,8 @@
         <form class="form-horizontal" id="FormThemMoi">
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="form-field-nhacungcap"> Tên sản phẩm </label>
-                <div class="col-sm-9">
-                    <select class="col-xs-10 col-sm-5" name="sanpham">
+                <div class="col-sm-3">
+                    <select class="form-control" name="sanpham">
                         @foreach (SanPham sp in ListSanPham)
                         {
                             <option value="@sp.Id">@sp.TenSP</option>
@@ -22,14 +22,14 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Ngày nhập </label>
-                <div class="col-sm-9">
-                    <input type="date" name="ngaynhap" class="col-xs-10 col-sm-5" data-date-format="dd-mm-yyyy" required />
+                <div class="col-sm-3">
+                    <input type="date" name="ngaynhap" class="form-control" data-date-format="dd-mm-yyyy" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Số lượng </label>
-                <div class="col-sm-9">
-                    <input type="number" name="soluong" min="1" value="1" class="col-xs-4 col-sm-2" required />
+                <div class="col-sm-3">
+                    <input type="number" name="soluong" min="1" value="1" class="form-control" required />
                 </div>
             </div>
             <div class="clearfix form-actions">
@@ -62,16 +62,9 @@
                 contentType: false,
                 success: function (data) {
                     if (data == 1) {
-                        BootstrapDialog.confirm('Thêm thành công, bạn có muốn tiếp tục thêm?', function (result) {
-                            if (result) {
-                                $('#FormThemMoi')[0].reset();
-                                $('.remove').click();
-                                $('#tenPhieuNhap').focus();
-                            } else {
-                                location.href = '/QuanLy/PhieuNhap';
-                            }
+                        BootstrapDialog.alert('Thêm thành công!', function () {
+                            location.href = '/QuanLy/PhieuNhap';
                         });
-
                     }
                     else {
                         BootstrapDialog.alert('Có lỗi trong khi thêm, vui lòng thử lại!');

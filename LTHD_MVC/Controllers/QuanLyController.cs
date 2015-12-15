@@ -23,6 +23,13 @@ namespace LTHD_MVC.Controllers
             return View();
         }
         #endregion Thống kê
+        
+        #region Thoát
+        public ActionResult Thoat(){
+            Session["Admin_Email"] = null;
+            return RedirectToAction("DangNhap");
+        }
+        #endregion Thoát
 
         #region Đăng nhập
         public bool KiemTraDangNhap()
@@ -53,6 +60,7 @@ namespace LTHD_MVC.Controllers
                 {
                     Session["Admin_Email"] = email;
                     Session["Admin_Hoten"] = nd.HoTen;
+                    Session["Admin_Quyen"] = nd.Id_Quyen;
                     if (Session["Path_URL"] == null)
                         Session["Path_URL"] = "/QuanLy";
                     return Session["Path_URL"].ToString();
@@ -114,11 +122,19 @@ namespace LTHD_MVC.Controllers
                         sp.HinhAnh = fileName;
                     }
                     sp.BaoHanh = fc["baohanh"].ToString() + " tháng";
-                    sp.SoLuong = Int32.Parse(fc["soluong"].ToString());
+                    sp.SoLuong = 0; // Int32.Parse(fc["soluong"].ToString());
                     sp.TrangThai = 1;
 
                     db.SanPham.Add(sp);
                     db.SaveChanges();
+
+                    //PhieuNhap pn = new PhieuNhap();
+                    //pn.SanPham = sp;
+                    //pn.NgayNhap = DateTime.Now;
+                    //pn.SoLuong = sp.SoLuong;
+
+                    //db.PhieuNhap.Add(pn);
+                    //db.SaveChanges();
 
                     return 1;
                 }
@@ -184,7 +200,7 @@ namespace LTHD_MVC.Controllers
                         sp.HinhAnh = fileName;
                     }
                     sp.BaoHanh = fc["baohanh"].ToString() + " tháng";
-                    sp.SoLuong = Int32.Parse(fc["soluong"].ToString());
+                    //sp.SoLuong = Int32.Parse(fc["soluong"].ToString());
 
                     db.SaveChanges();
 
@@ -484,6 +500,9 @@ namespace LTHD_MVC.Controllers
                     pn.SoLuong = int.Parse(fc["soluong"].ToString());
 
                     db.PhieuNhap.Add(pn);
+
+                    pn.SanPham.SoLuong += pn.SoLuong;
+
                     db.SaveChanges();
 
                     return 1;
@@ -521,10 +540,19 @@ namespace LTHD_MVC.Controllers
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
                 {
                     PhieuNhap pn = db.PhieuNhap.Find(Int32.Parse(fc["idphieunhap"].ToString()));
+                    int pnId_SP = pn.Id_SP;
+                    int pnSoLuong = pn.SoLuong;
                     pn.SanPham = db.SanPham.Find(Int32.Parse(fc["sanpham"].ToString()));
                     pn.NgayNhap = Convert.ToDateTime(fc["ngaynhap"].ToString());
                     pn.SoLuong = Int32.Parse(fc["soluong"].ToString());
+
+                    pn.SanPham.SoLuong += pn.SoLuong;
+
+                    SanPham sp = db.SanPham.Find(pnId_SP);
+                    sp.SoLuong = sp.SoLuong - pnSoLuong;
+
                     db.SaveChanges();
+
                     return 1;
                 }
             }

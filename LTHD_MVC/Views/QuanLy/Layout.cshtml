@@ -165,42 +165,13 @@
                 </a>
             </div>
 
-            <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <div class="navbar-buttons navbar-header pull-right" role="navigation" style="color:white">
                 <ul class="nav ace-nav">
-                    <li class="light-blue">
-                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <span class="user-info">
-                                <small>Xin chào,</small>
-                                @Session["Admin_Hoten"]
-                            </span>
-
-                            <i class="ace-icon fa fa-caret-down"></i>
-                        </a>
-
-                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                            <li>
-                                <a href="/QuanLy/Settings">
-                                    <i class="ace-icon fa fa-cog"></i>
-                                    Cài đặt
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="/QuanLy/Profile">
-                                    <i class="ace-icon fa fa-user"></i>
-                                    Thông tin cá nhân
-                                </a>
-                            </li>
-
-                            <li class="divider"></li>
-
-                            <li>
-                                <a href="/QuanLy/logout">
-                                    <i class="ace-icon fa fa-power-off"></i>
-                                    Thoát
-                                </a>
-                            </li>
-                        </ul>
+                    <li>
+                        Xin chào <strong> @Session["Admin_Hoten"] </strong>
+                    </li>
+                    <li style="margin-left:10px; border:none;">
+                        <a href="/QuanLy/Thoat">Thoát</a>
                     </li>
                 </ul>
             </div>
@@ -219,21 +190,21 @@
 
             <div class="sidebar-shortcuts" id="sidebar-shortcuts">
                 <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
-                    <button class="btn btn-success">
-                        <i class="ace-icon fa fa-signal"></i>
-                    </button>
+                    <a href="/QuanLy/SanPham" title="Quản lý sản phẩm" class="btn btn-success no-border">
+                        <i class="ace-icon fa fa-th"></i>
+                    </a>
 
-                    <button class="btn btn-info">
-                        <i class="ace-icon fa fa-pencil"></i>
-                    </button>
+                    <a href="/QuanLy/NhaCungCap" title="Quản lý nhà cung cấp" class="btn btn-info no-border">
+                        <i class="ace-icon fa fa-building-o"></i>
+                    </a>
 
-                    <button class="btn btn-warning">
-                        <i class="ace-icon fa fa-users"></i>
-                    </button>
+                    <a href="/QuanLy/NguoiDung" title="Quản lý người dùng" class="btn btn-warning no-border">
+                        <i class="ace-icon fa fa-group"></i>
+                    </a>
 
-                    <button class="btn btn-danger">
-                        <i class="ace-icon fa fa-cogs"></i>
-                    </button>
+                    <a href="/QuanLy/PhieuNhap" title="Quản lý phiếu nhập" class="btn btn-danger no-border">
+                        <i class="ace-icon fa fa-desktop"></i>
+                    </a>
                 </div>
 
                 <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
@@ -248,12 +219,12 @@
             </div><!-- /.sidebar-shortcuts -->
 
             <ul class="nav nav-list">
-                <li class="@ViewBag.ClassThongKe">
+                @*<li class="@ViewBag.ClassThongKe">
                     <a href="/QuanLy/ThongKe">
                         <i class="menu-icon fa fa-bar-chart"></i>
                         <span class="menu-text">Thống kê</span>
                     </a>
-                </li>
+                </li>*@
 
                 <li class="@ViewBag.ClassSanPham">
                     <a href="/QuanLy/SanPham">

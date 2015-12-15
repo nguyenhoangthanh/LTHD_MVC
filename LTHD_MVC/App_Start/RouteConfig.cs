@@ -60,7 +60,7 @@ namespace LTHD_MVC
             routes.MapRoute(
                 name: "QuanLy",
                 url: "QuanLy/{action}",
-                defaults: new { controller = "QuanLy", action = "ThongKe", id = UrlParameter.Optional }
+                defaults: new { controller = "QuanLy", action = "SanPham", id = UrlParameter.Optional }
             );
 
             // End Quan Ly

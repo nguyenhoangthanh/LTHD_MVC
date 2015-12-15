@@ -12,41 +12,49 @@
         <form class="form-horizontal" id="FormCapNhat">
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Họ tên </label>
-                <div class="col-sm-9">
-                    <input type="text" name="hoten" id="hoten" class="col-xs-10 col-sm-5" required value="@nd.HoTen" />
+                <div class="col-sm-4">
+                    <input type="text" name="hoten" id="hoten" class="form-control" required value="@nd.HoTen" />
                     <input type="hidden" name="idnguoidung" id="idnguoidung" value="@nd.Id" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Email </label>
-                <div class="col-sm-9">
-                    <input type="email" class="col-xs-10 col-sm-5" value="@nd.Email" disabled="disabled" />
+                <div class="col-sm-4">
+                    <input type="email" class="form-control" value="@nd.Email" disabled="disabled" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Mật khẩu </label>
-                <div class="col-sm-9">
-                    <input type="password" class="col-xs-10 col-sm-5" placeholder="để trống nếu không muốn cập nhật lại mật khẩu" />
+                <div class="col-sm-4">
+                    <input type="password" name="matkhau" class="form-control" placeholder="để trống nếu không muốn cập nhật lại mật khẩu" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Địa chỉ </label>
-                <div class="col-sm-9">
+                <div class="col-sm-4">
                     <input type="text" name="diachi" value="@nd.DiaChi" class="form-control" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> Số điện thoại </label>
-                <div class="col-sm-9">
-                    <input type="number" name="sodienthoai" value="@nd.DienThoai" class="form-control" required />
+                <div class="col-sm-2">
+                    <input type="tel" name="dienthoai" value="@nd.DienThoai" class="form-control" required />
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right"> Quyền </label>
-                <div class="col-sm-9">
-                    
+            @if (Session["Admin_Quyen"].ToString() == "2")
+            {
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right"> Quyền </label>
+                    <div class="col-sm-2">
+                        <select name="quyen" id="quyen" class="form-control">
+                            @foreach (Quyen q in ListQuyen)
+                            {
+                                <option value="@q.Id" @if (@q.Id == @nd.Id_Quyen) { @Html.Raw("selected=\"selected\"")  ; }>@q.TenQuyen</option>
+                            }
+                        </select>
+                    </div>
                 </div>
-            </div>
+            }
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info no-border" type="submit">
@@ -55,7 +63,7 @@
                     </button>
 
                     &nbsp; &nbsp; &nbsp;
-                    <a href="javascript:history.back();" class="btn no-border" type="button">
+                    <a href="/QuanLy/NguoiDung" class="btn no-border" type="button">
                         <i class="ace-icon fa fa-undo bigger-110"></i>
                         Quay về
                     </a>
@@ -67,18 +75,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#hinh').ace_file_input({
-            no_file: 'No File ...',
-            btn_choose: 'Choose',
-            btn_change: 'Change',
-            droppable: false,
-            onchange: null,
-            thumbnail: true,
-            whitelist: 'gif|png|jpg|jpeg',
-            blacklist: 'exe|php'
-        });
-
-        $('#FormThemMoi').submit(function () {
+        $('#FormCapNhat').submit(function () {
             $.ajax({
                 url: '/QuanLy/NguoiDung/XuLyCapNhatNguoiDung',
                 type: 'POST',
