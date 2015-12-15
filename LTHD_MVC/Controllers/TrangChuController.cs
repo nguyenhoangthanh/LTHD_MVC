@@ -133,10 +133,12 @@ namespace LTHD_MVC.Controllers
 
         public ActionResult DangKy()
         {
+            Layout();
             return View();
         }
         public int XuLyDangKy(FormCollection fc)
         {
+            Layout();
             try
             {
                 using (LTHD_WebLaptopEntities db = new LTHD_WebLaptopEntities())
